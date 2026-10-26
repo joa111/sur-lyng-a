@@ -420,6 +420,7 @@ function openDrawer() {
   state.drawerOpen = true;
   dom.bookmarkDrawer.classList.add('open');
   dom.drawerBackdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
   renderBookmarkDrawer();
 }
 
@@ -427,6 +428,9 @@ function closeDrawer() {
   state.drawerOpen = false;
   dom.bookmarkDrawer.classList.remove('open');
   dom.drawerBackdrop.classList.remove('open');
+  if (!dom.readerOverlay.classList.contains('open')) {
+    document.body.style.overflow = '';
+  }
 }
 
 /* ============================================================
@@ -444,9 +448,7 @@ function showToast(message) {
 /* ============================================================
    SHARE / COPY
    ============================================================ */
-function sharePoem() {
-  if (!state.currentPoem) return;
-  const url = `${window.location.origin}${window.location.pathname}#poem-${state.currentPoem.id}`;
+function copyToClipboard(url) {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(url).then(() => showToast('Link copied to clipboard.'));
   } else {
@@ -458,6 +460,27 @@ function sharePoem() {
     document.execCommand('copy');
     document.body.removeChild(ta);
     showToast('Link copied to clipboard.');
+  }
+}
+
+function sharePoem() {
+  if (!state.currentPoem) return;
+  const url = `${window.location.origin}${window.location.pathname}#poem-${state.currentPoem.id}`;
+  const shareData = {
+    title: `${state.currentPoem.title} — sur lyng-a`,
+    text: `"${state.currentPoem.title}" — poetry by [joa]`,
+    url: url
+  };
+
+  // Use native OS share sheet if supported (mobile iOS/Android)
+  if (navigator.share) {
+    navigator.share(shareData).catch(err => {
+      if (err.name !== 'AbortError') {
+        copyToClipboard(url);
+      }
+    });
+  } else {
+    copyToClipboard(url);
   }
 }
 
@@ -562,12 +585,47 @@ function wireEvents() {
 
   // Handle browser back button
   window.addEventListener('popstate', e => {
+    if (state.drawerOpen) {
+      closeDrawer();
+    }
     if (dom.readerOverlay.classList.contains('open')) {
       dom.readerOverlay.classList.remove('open');
       document.body.style.overflow = '';
       state.currentPoem = null;
     }
   });
+
+  // Touch / Swipe gestures for Reader Overlay
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  dom.readerOverlay?.addEventListener('touchstart', e => {
+    if (e.changedTouches && e.changedTouches[0]) {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }
+  }, { passive: true });
+
+  dom.readerOverlay?.addEventListener('touchend', e => {
+    if (!e.changedTouches || !e.changedTouches[0]) return;
+    const touchEndX = e.changedTouches[0].screenX;
+    const touchEndY = e.changedTouches[0].screenY;
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+
+    // Verify horizontal swipe dominance and distance threshold (min 55px)
+    if (Math.abs(diffX) > 55 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+      if (diffX < 0) {
+        // Swiped left -> Next poem
+        const nextId = dom.readerNavNext ? parseInt(dom.readerNavNext.dataset.poemId, 10) : null;
+        if (nextId) openPoem(nextId);
+      } else {
+        // Swiped right -> Previous poem
+        const prevId = dom.readerNavPrev ? parseInt(dom.readerNavPrev.dataset.poemId, 10) : null;
+        if (prevId) openPoem(prevId);
+      }
+    }
+  }, { passive: true });
 
   // Check URL hash on load (shareable link support)
   const hash = window.location.hash;
