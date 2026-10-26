@@ -14,7 +14,7 @@
  *    stanzas, and indent lines with spaces as desired.
  *  • `epigraph` and `marginNote` are optional — set to null
  *    or remove the key if not needed.
- *  • `epigraph` format: "quote — Author, Work"
+ *  • `epigraph` format: { text: "...", attribution: "— Author, Source" }
  *  • `theme` must be one of:
  *      'Nostalgia' | 'Midnight' | 'Nature' | 'Love & Loss' | 'Solitude'
  * ============================================================
@@ -28,11 +28,10 @@ const POEMS = [
     date: "March 2026",
     theme: "Midnight",
     featured: false,
-    epigraph: {                   // or: null
-      text: "Quote text here.",
-      attribution: "— Author, Source"
+    epigraph: {
+      text: "Is all that we see or seem / But a dream within a dream?",
+      attribution: "— Edgar Allan Poe, A Dream Within a Dream"
     },
-    // epigraph: `Is all that we see or seem / But a dream within a dream? — Edgar Allan Poe, A Dream Within a Dream`,
     body: `I dreamt waking up next to you,
 
 I rubbed my eyes, twice
@@ -208,7 +207,10 @@ ryngkat wei jingkmen wa thaba wa phyrnai`,
     date: "September 2025",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "It is an ever-fixed mark, / That looks on tempests and is never shaken — William Shakespeare, Sonnet 116",
+    epigraph: {
+      text: "It is an ever-fixed mark, / That looks on tempests and is never shaken",
+      attribution: "— William Shakespeare, Sonnet 116"
+    },
     body: `She fits into my life like a daily routine.
 She feels like a part of my every day.
 I need to hear her breath,
@@ -228,7 +230,10 @@ and if ive seen her, she wouldnt see me.`,
     date: "September 2025",
     theme: "Nature",
     featured: false,
-    epigraph: "Life, like a dome of many-coloured glass, / Stains the white radiance of Eternity — Percy Bysshe Shelley, Adonais",
+    epigraph: {
+      text: "Life, like a dome of many-coloured glass, / Stains the white radiance of Eternity",
+      attribution: "— Percy Bysshe Shelley, Adonais"
+    },
     body: `That beam of light, a single source
 came through like an isekai truck.
 Reflected through him, diverged
@@ -254,7 +259,10 @@ We move along. Just to prolong, of what can be born, in this unfaithful dorm, th
     date: "September 2025",
     theme: "Midnight",
     featured: false,
-    epigraph: "We're all mad here. — Lewis Carroll, Alice's Adventures in Wonderland",
+    epigraph: {
+      text: "We're all mad here.",
+      attribution: "— Lewis Carroll, Alice's Adventures in Wonderland"
+    },
     body: `Its like Im a mad uncle,
 going left, right, up and down
 through this infinite cycle.
@@ -287,7 +295,10 @@ I hailed a cab and called it home.`,
     date: "March 2025",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "The desire of the moth for the star — Percy Bysshe Shelley, One Word Is Too Often Profaned",
+    epigraph: {
+      text: "The desire of the moth for the star",
+      attribution: "— Percy Bysshe Shelley, One Word Is Too Often Profaned"
+    },
     body: `my sweet desolate destruction,
 i am a moth, mesmerised by your ignition.
 Therefore the closer i get into your realm,
@@ -323,7 +334,10 @@ What remains when nobody's looking?`,
     date: "January 2025",
     theme: "Midnight",
     featured: false,
-    epigraph: "We are all in the gutter, but some of us are looking at the stars. — Oscar Wilde, Lady Windermere's Fan",
+    epigraph: {
+      text: "We are all in the gutter, but some of us are looking at the stars.",
+      attribution: "— Oscar Wilde, Lady Windermere's Fan"
+    },
     body: `I sit by the fire,
 ponder if my yearn seems dire.
 I lit my cigarette of desires.
@@ -360,7 +374,10 @@ taste like sweet cream`,
     date: "January 2025",
     theme: "Nature",
     featured: false,
-    epigraph: "If Winter comes, can Spring be far behind? — Percy Bysshe Shelley, Ode to the West Wind",
+    epigraph: {
+      text: "If Winter comes, can Spring be far behind?",
+      attribution: "— Percy Bysshe Shelley, Ode to the West Wind"
+    },
     body: `The contradictory weather,
 in violent breeze it carries,
 but all the season long for is warmth.
@@ -380,7 +397,10 @@ it is a gentle teacher behind the violent cry.`,
     date: "January 2025",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "I found myself within a forest dark, / For the straightforward pathway had been lost. — Dante, Inferno (trans. Longfellow)",
+    epigraph: {
+      text: "I found myself within a forest dark, / For the straightforward pathway had been lost.",
+      attribution: "— Dante, Inferno (trans. Longfellow)"
+    },
     body: `Lost, but never wanting to be found.
 Amidst the chaos, perhaps I'm bound
 to wander this mysterious, unending path,
@@ -404,7 +424,10 @@ but remember everything and nothing, gently.`,
     date: "December 2024",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "All the world's a stage, / And all the men and women merely players. — William Shakespeare, As You Like It",
+    epigraph: {
+      text: "All the world's a stage, / And all the men and women merely players.",
+      attribution: "— William Shakespeare, As You Like It"
+    },
     body: `Hand quivers when I try to flow my pen these days.
 Distinguish on paper, dumb in soul. But I pray,
 hoping she atleast heed the sound of my chord.
@@ -422,7 +445,10 @@ But now everything, if nothing, is more than a mere play.`,
     date: "July 2023",
     theme: "Solitude",
     featured: false,
-    epigraph: "Life's but a walking shadow — William Shakespeare, Macbeth",
+    epigraph: {
+      text: "Life's but a walking shadow",
+      attribution: "— William Shakespeare, Macbeth"
+    },
     body: `How blessed am I.
 
 Am I a presence or just a whisper?
@@ -456,7 +482,10 @@ But simply where....?`,
     date: "January 2023",
     theme: "Nostalgia",
     featured: false,
-    epigraph: "To me the meanest flower that blows can give / Thoughts that do often lie too deep for tears. — William Wordsworth, Ode: Intimations of Immortality",
+    epigraph: {
+      text: "To me the meanest flower that blows can give / Thoughts that do often lie too deep for tears.",
+      attribution: "— William Wordsworth, Ode: Intimations of Immortality"
+    },
     body: `Find joy in the commons,
 Perhaps everything will color,
 Be the one who summons
@@ -494,7 +523,10 @@ To embrace life, wanting nothing more?`,
     date: "January 2023",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "Doubt truth to be a liar; / But never doubt I love. — William Shakespeare, Hamlet",
+    epigraph: {
+      text: "Doubt truth to be a liar; / But never doubt I love.",
+      attribution: "— William Shakespeare, Hamlet"
+    },
     body: `When you act from pity, is it a debt I must repay?
 
 When you act from love, is there any debt to begin with?
@@ -531,7 +563,10 @@ Tell me... Is meaning found, or do we carve it from the void with trembling hand
     date: "December 2021",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "The heart has its reasons, which reason knows nothing of. — Blaise Pascal, Pensées",
+    epigraph: {
+      text: "The heart has its reasons, which reason knows nothing of.",
+      attribution: "— Blaise Pascal, Pensées"
+    },
     body: `This bloody organ,
 continuously beating,
 when he thinks of her,
@@ -567,7 +602,10 @@ upon encountering her aura.`,
     date: "December 2021",
     theme: "Nostalgia",
     featured: false,
-    epigraph: "I summon up remembrance of things past — William Shakespeare, Sonnet 30",
+    epigraph: {
+      text: "I summon up remembrance of things past",
+      attribution: "— William Shakespeare, Sonnet 30"
+    },
     body: `A woman, with two jugs of ale,
 came to me, per chance with a tale?
 No, she said here's a beautiful pint
@@ -593,7 +631,10 @@ Embrace truth's call, i shall put it to the grave.`,
     date: "September 2021",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "Ah, but a man's reach should exceed his grasp, / Or what's a heaven for? — Robert Browning, Andrea del Sarto",
+    epigraph: {
+      text: "Ah, but a man's reach should exceed his grasp, / Or what's a heaven for?",
+      attribution: "— Robert Browning, Andrea del Sarto"
+    },
     body: `The wind was howling,
 Carried away all the meaning.
 Plenty of questions,
@@ -623,7 +664,10 @@ to this uncalculated mystery.`,
     date: "January 2021",
     theme: "Love & Loss",
     featured: false,
-    epigraph: "The Love which moves the sun and the other stars. — Dante, Paradiso",
+    epigraph: {
+      text: "The Love which moves the sun and the other stars.",
+      attribution: "— Dante, Paradiso"
+    },
     body: `A million stars glittering across
 yet u shine the brightest.
 Comparing u with the moon,
@@ -647,7 +691,10 @@ when I can see you again`,
     date: "August 2020",
     theme: "Nature",
     featured: true,
-    epigraph: "Blow, winds, and crack your cheeks! Rage! Blow! — William Shakespeare, King Lear",
+    epigraph: {
+      text: "Blow, winds, and crack your cheeks! Rage! Blow!",
+      attribution: "— William Shakespeare, King Lear"
+    },
     body: `*thunderstorm noise*
 
 The savior (whose?), so disastrous,
