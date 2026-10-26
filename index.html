@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="sur lyng-a — A poetry portfolio and digital chapbook by [joa]" />
+  <title>sur lyng-a — poetry by [joa]</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=EB+Garamond:ital,wght@0,400;1,400&family=Courier+Prime:ital,wght@0,400;1,400&display=swap"
+    rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+     PUBLICATION TOPBAR
+     ═══════════════════════════════════════════════════════ -->
+  <header class="pub-topbar" role="banner">
+    <div class="pub-topbar-inner">
+      <!-- Volume / Issue label -->
+      <span class="pub-volume-label">Vol. I &nbsp;·&nbsp; A Personal Chapbook &nbsp;·&nbsp; Est. Iongkaluh, 2021</span>
+
+      <!-- Controls -->
+      <div class="pub-topbar-controls">
+        <!-- Bookmark Drawer trigger -->
+        <button class="btn-icon" id="bookmark-drawer-btn" title="Open bookmarks drawer"
+          aria-label="Open bookmarks drawer" aria-haspopup="dialog">
+          <!-- Bookmark icon -->
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M3 2h10v13l-5-3.5L3 15V2z" />
+          </svg>
+          <span>Bookmarks</span>
+          <span id="bookmark-count" style="font-size:0.6rem; color:var(--accent-primary);"></span>
+        </button>
+
+        <!-- Theme toggle -->
+        <button class="btn-icon" id="theme-toggle" title="Switch to Candlelight (Dark)"
+          aria-label="Toggle reading theme">
+          <!-- Candle icon -->
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <line x1="8" y1="1" x2="8" y2="2.5" />
+            <path d="M6 5c0-1.1 2-3 2-3s2 1.9 2 3a2 2 0 01-4 0z" />
+            <rect x="5" y="7" width="6" height="8" rx="1" />
+          </svg>
+          <span class="theme-label">Candlelight</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════
+     MASTHEAD
+     ═══════════════════════════════════════════════════════ -->
+  <div class="masthead" role="complementary" aria-label="Publication masthead">
+    <div class="masthead-inner">
+      <div class="masthead-double-rule" aria-hidden="true"></div>
+
+      <p class="masthead-subtitle">A Digital Chapbook &amp; Poetry-folio</p>
+      <h1 class="masthead-title">sur lyng-a</h1>
+      <p class="masthead-author">by joa</p>
+
+      <div class="masthead-double-rule-bottom" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <hr class="section-rule" />
+
+  <!-- ═══════════════════════════════════════════════════════
+     HERO — Epigraph + Featured Poem
+     ═══════════════════════════════════════════════════════ -->
+  <section class="hero" aria-label="Featured poem and epigraph">
+
+    <!-- Epigraph -->
+    <div class="hero-epigraph">
+      <p class="hero-epigraph-label">Epigraph</p>
+      <blockquote>
+        "Poetry is not a turning loose of emotion, but an escape from emotion; it is not the expression of personality,
+        but an escape from personality."
+      </blockquote>
+      <cite>— T.S. Eliot, <em>Tradition and the Individual Talent</em></cite>
+    </div>
+
+    <!-- Featured poem panel -->
+    <div class="hero-featured" role="article" aria-label="Featured poem">
+      <div id="hero-featured-wrap">
+        <!-- Populated by JS -->
+        <div class="featured-label">Featured Poem of the Month</div>
+        <p style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-secondary);">Loading…</p>
+      </div>
+    </div>
+
+  </section>
+
+  <hr class="section-rule" />
+
+  <!-- ═══════════════════════════════════════════════════════
+     ANTHOLOGY INDEX
+     ═══════════════════════════════════════════════════════ -->
+  <main class="anthology" id="anthology" aria-label="Poem anthology">
+    <div class="anthology-inner">
+
+      <!-- Section heading -->
+      <div class="anthology-header">
+        <h2 class="section-heading">
+          <span class="section-number" aria-hidden="true">I.</span>
+          The Anthology
+        </h2>
+      </div>
+
+      <!-- Controls: Search + Filters + View switcher -->
+      <div class="anthology-controls" role="toolbar" aria-label="Filter and view controls">
+
+        <!-- Search -->
+        <div class="search-wrap">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="6.5" cy="6.5" r="4.5" />
+              <line x1="10.5" y1="10.5" x2="14" y2="14" />
+            </svg>
+          </span>
+          <input type="search" class="search-input" id="search-input" placeholder="Search poems…"
+            aria-label="Search poems by keyword" autocomplete="off" spellcheck="false" />
+        </div>
+
+        <!-- Theme filter pills -->
+        <div class="filter-pills" role="group" aria-label="Filter by theme">
+          <button class="filter-pill active" data-filter="All" aria-pressed="true">All</button>
+          <button class="filter-pill" data-filter="Nostalgia" aria-pressed="false">Nostalgia</button>
+          <button class="filter-pill" data-filter="Midnight" aria-pressed="false">Midnight</button>
+          <button class="filter-pill" data-filter="Nature" aria-pressed="false">Nature</button>
+          <button class="filter-pill" data-filter="Love & Loss" aria-pressed="false">Love &amp; Loss</button>
+          <button class="filter-pill" data-filter="Solitude" aria-pressed="false">Solitude</button>
+        </div>
+
+        <!-- View switcher -->
+        <div class="view-switcher" role="group" aria-label="Toggle view">
+          <button class="view-btn active" data-view="toc" title="Table of Contents view" aria-pressed="true">
+            <!-- List icon -->
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"
+              aria-hidden="true">
+              <line x1="1" y1="3" x2="11" y2="3" />
+              <line x1="1" y1="6" x2="11" y2="6" />
+              <line x1="1" y1="9" x2="11" y2="9" />
+            </svg>
+            Index
+          </button>
+          <button class="view-btn" data-view="grid" title="Card grid view" aria-pressed="false">
+            <!-- Grid icon -->
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"
+              aria-hidden="true">
+              <rect x="1" y="1" width="4" height="4" rx="0.5" />
+              <rect x="7" y="1" width="4" height="4" rx="0.5" />
+              <rect x="1" y="7" width="4" height="4" rx="0.5" />
+              <rect x="7" y="7" width="4" height="4" rx="0.5" />
+            </svg>
+            Cards
+          </button>
+        </div>
+
+      </div><!-- /controls -->
+
+      <!-- ── TABLE OF CONTENTS VIEW ── -->
+      <div class="toc-view active" id="toc-view" role="region" aria-label="Table of contents">
+
+        <!-- Column headers -->
+        <div class="toc-header" aria-hidden="true">
+          <div class="toc-col-label">No.</div>
+          <div class="toc-col-label">Title</div>
+          <div class="toc-col-label">Theme</div>
+          <div class="toc-col-label" style="text-align:right;">Written</div>
+        </div>
+
+        <!-- Rows populated by JS -->
+        <div id="toc-body" role="list" aria-label="Poem index"></div>
+
+      </div>
+
+      <!-- ── CARD GRID VIEW ── -->
+      <div class="grid-view" id="grid-body" role="list" aria-label="Poem cards"></div>
+
+      <!-- ── EMPTY STATE ── -->
+      <div class="empty-state" id="empty-state" role="status" aria-live="polite">
+        <p>No poems found.</p>
+        <small>Try adjusting your search or filter.</small>
+      </div>
+
+    </div><!-- /anthology-inner -->
+  </main>
+
+  <hr class="section-rule" />
+
+  <!-- ═══════════════════════════════════════════════════════
+     ABOUT THE POET
+     ═══════════════════════════════════════════════════════ -->
+  <section class="about-section" id="about" aria-label="About the poet">
+    <div class="about-inner">
+
+      <!-- Portrait placeholder -->
+      <div class="about-portrait-frame" role="img" aria-label="Author portrait placeholder">
+        <!-- Person silhouette icon -->
+        <svg class="portrait-icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+          <circle cx="24" cy="16" r="10" />
+          <path d="M4 44c0-11 9-20 20-20s20 9 20 20" />
+        </svg>
+        <span class="portrait-label">Portrait</span>
+      </div>
+
+      <!-- Bio text -->
+      <div class="about-text">
+        <p class="about-section-label">II. &nbsp;About the Poet</p>
+        <h2 class="about-title">[joa]</h2>
+
+        <p class="about-bio">
+          [joa] writes at the intersection of memory and geography — the thin country between what happened and what we
+          remember happening. Their work has been described as "quietly devastating" and "the literary equivalent of
+          finding an old letter in a coat pocket."
+        </p>
+        <p class="about-bio">
+          Born somewhere with too much rain and not enough bookshelves, [joa] spent formative years in rented rooms
+          across four countries, accumulating strong opinions about good coffee, bad weather, and the precise emotional
+          weight of a well-placed em-dash.
+        </p>
+        <p class="about-bio">
+          <em>sur lyng-a</em> is their first chapbook. The title derives from an old word meaning, roughly, "the ache of
+          a place you have not yet left." All the poems here are true, and some of them actually happened.
+        </p>
+
+        <div class="about-links">
+          <a href="mailto:joa@example.com" class="about-link">Write to me</a>
+          <a href="#" class="about-link">Archive</a>
+          <a href="#" class="about-link">Notes &amp; Essays</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+     COLOPHON FOOTER
+     ═══════════════════════════════════════════════════════ -->
+  <footer class="colophon" role="contentinfo">
+    <div class="colophon-inner">
+
+      <!-- Typography -->
+      <div>
+        <h3 class="colophon-heading">Typography</h3>
+        <p class="colophon-body">
+          Display type set in <em>Cormorant Garamond</em> by Christian Thalmann. Body text in <em>EB Garamond</em>, a
+          digital revival of Claude Garamond's roman types of the 1530s. Metadata and catalog numbers in <em>Courier
+            Prime</em> by Alan Dague-Greene.
+        </p>
+      </div>
+
+      <!-- Publication details -->
+      <div>
+        <h3 class="colophon-heading">Publication</h3>
+        <p class="colophon-body">
+          <em>sur lyng-a</em> is a digital chapbook published in continuous edition. Poems are added as written. All
+          work &copy; [joa], all years. No part of this publication may be reproduced without the poet's written
+          permission. Except for quotation in critical articles, reviews, and lonesome marginal notes.
+        </p>
+      </div>
+
+      <!-- Contact & links -->
+      <div>
+        <h3 class="colophon-heading">Find Me</h3>
+        <p class="colophon-body">
+          Correspondence by <a href="mailto:joa@example.com">electronic mail</a> is welcomed. I respond slowly and
+          thoughtfully, which I believe is the correct pace for letters.
+          <br /><br />
+          This site has no tracking, no cookies (except your theme and bookmarks, saved locally), and no interest in
+          your data. Only your attention, and only if you'd like to give it.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="colophon-inner colophon-bottom">
+      <p class="colophon-copyright">
+        <em>sur lyng-a</em> &nbsp;·&nbsp; Poetry by [joa] &nbsp;·&nbsp; All rights reserved &nbsp;·&nbsp;
+        Typeset with care, read at your own pace.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════
+     POEM READER OVERLAY
+     ═══════════════════════════════════════════════════════ -->
+  <div class="reader-overlay" id="reader-overlay" role="dialog" aria-modal="true" aria-labelledby="reader-title"
+    aria-describedby="reader-body">
+
+    <!-- Reader top bar -->
+    <div class="reader-topbar">
+      <button class="reader-back" id="reader-back" aria-label="Return to anthology">
+        <!-- Back arrow -->
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"
+          aria-hidden="true">
+          <line x1="12" y1="7" x2="2" y2="7" />
+          <polyline points="6,3 2,7 6,11" />
+        </svg>
+        Back to Anthology
+      </button>
+
+      <div class="reader-controls">
+
+        <!-- Font decrease -->
+        <button class="reader-control-btn" id="font-decrease" title="Decrease font size"
+          aria-label="Decrease font size">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"
+            aria-hidden="true">
+            <text x="1" y="11" font-size="11" fill="currentColor" stroke="none" font-family="serif">A</text>
+            <text x="8" y="14" font-size="8" fill="currentColor" stroke="none" font-family="serif">−</text>
+          </svg>
+          <span>A−</span>
+        </button>
+
+        <!-- Font increase -->
+        <button class="reader-control-btn" id="font-increase" title="Increase font size"
+          aria-label="Increase font size">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"
+            aria-hidden="true">
+            <text x="1" y="11" font-size="11" fill="currentColor" stroke="none" font-family="serif">A</text>
+            <text x="8" y="14" font-size="8" fill="currentColor" stroke="none" font-family="serif">+</text>
+          </svg>
+          <span>A+</span>
+        </button>
+
+        <!-- Bookmark / Dog-ear -->
+        <button class="reader-control-btn" id="reader-bookmark-btn" title="Dog-ear this poem"
+          aria-label="Toggle bookmark for this poem">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"
+            aria-hidden="true">
+            <path d="M3 2h10v13l-5-3.5L3 15V2z" />
+          </svg>
+          <span class="bm-label">Dog-ear</span>
+        </button>
+
+        <!-- Share / Copy link -->
+        <button class="reader-control-btn" id="reader-share-btn" title="Copy link to this poem"
+          aria-label="Copy shareable link to this poem">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"
+            aria-hidden="true">
+            <circle cx="13" cy="3" r="2" />
+            <circle cx="3" cy="8" r="2" />
+            <circle cx="13" cy="13" r="2" />
+            <line x1="5" y1="7" x2="11" y2="4" />
+            <line x1="5" y1="9" x2="11" y2="12" />
+          </svg>
+          <span>Share</span>
+        </button>
+
+      </div>
+    </div><!-- /reader-topbar -->
+
+    <!-- Reader content -->
+    <div class="reader-content">
+
+      <p class="reader-catalog-num" id="reader-catalog">No. 00</p>
+      <h2 class="reader-poem-title" id="reader-title">Poem Title</h2>
+
+      <!-- Metadata: date · theme · reading time -->
+      <div class="reader-meta" id="reader-meta"></div>
+
+      <!-- Epigraph (hidden if none) -->
+      <blockquote class="reader-epigraph" id="reader-epigraph" style="display:none;">
+        <p class="reader-epigraph-text"></p>
+        <cite class="reader-epigraph-attr"></cite>
+      </blockquote>
+
+      <hr class="reader-rule" id="reader-rule" style="display:none;" />
+
+      <!-- Poem body -->
+      <pre class="reader-poem-body" id="reader-body" aria-label="Poem text"></pre>
+
+      <!-- Margin note (collapsible) -->
+      <div class="margin-note-wrapper" id="reader-margin-note" style="display:none;">
+        <button class="margin-note-toggle" id="margin-toggle" aria-expanded="false" aria-controls="margin-body">
+          <svg class="margin-note-toggle-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"
+            aria-hidden="true">
+            <polyline points="4,2 10,7 4,12" />
+          </svg>
+          Poet's Margin Note
+        </button>
+        <div class="margin-note-body" id="margin-body" role="region" aria-label="Poet's margin note"></div>
+      </div>
+
+    </div><!-- /reader-content -->
+
+    <!-- Reader navigation (prev / next) -->
+    <nav class="reader-nav" aria-label="Navigate between poems">
+      <button class="reader-nav-link prev" id="reader-nav-prev" aria-label="Previous poem">
+        <span class="reader-nav-label">← Previous</span>
+        <span class="reader-nav-title"></span>
+      </button>
+      <button class="reader-nav-link next" id="reader-nav-next" aria-label="Next poem">
+        <span class="reader-nav-label">Next →</span>
+        <span class="reader-nav-title"></span>
+      </button>
+    </nav>
+
+  </div><!-- /reader-overlay -->
+
+  <!-- ═══════════════════════════════════════════════════════
+     BOOKMARK DRAWER
+     ═══════════════════════════════════════════════════════ -->
+  <div class="drawer-backdrop" id="drawer-backdrop" role="presentation" aria-hidden="true"></div>
+
+  <aside class="bookmark-drawer" id="bookmark-drawer" role="dialog" aria-modal="true" aria-label="Bookmarked poems">
+    <div class="bookmark-drawer-header">
+      <h2 class="bookmark-drawer-title">Dog-eared Pages</h2>
+      <button class="bookmark-close" id="bookmark-close" aria-label="Close bookmarks drawer">✕</button>
+    </div>
+
+    <div class="bookmark-drawer-body">
+      <p class="bookmark-empty" id="bookmark-empty">
+        No poems dog-eared yet.<br />
+        <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-secondary);">Open a poem and press
+          "Dog-ear" to save it here.</span>
+      </p>
+      <div id="bookmark-list"></div>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════
+     TOAST
+     ═══════════════════════════════════════════════════════ -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════ -->
+  <script src="poems.js"></script>
+  <script src="app.js"></script>
+
+</body>
+
+</html>
