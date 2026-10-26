@@ -1386,6 +1386,7 @@ pre.reader-poem-body {
     min-height: 44px;
     padding: 0.6rem 0.8rem 0.6rem 2.2rem;
     -webkit-appearance: none;
+    appearance: none;
     border-radius: var(--radius-sm);
   }
 
