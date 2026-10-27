@@ -21,6 +21,10 @@ const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
 const dom = {
+  paletteDropdown: $('#palette-dropdown'),
+  paletteBtn: $('#palette-btn'),
+  paletteMenu: $('#palette-menu'),
+  paletteCurrentLabel: $('#palette-current-label'),
   themeToggle: $('#theme-toggle'),
   bookmarkDrawerBtn: $('#bookmark-drawer-btn'),
   filterPills: $$('.filter-pill'),
@@ -58,24 +62,70 @@ const dom = {
 };
 
 /* ============================================================
-   THEME
+   PALETTES & THEMES
    ============================================================ */
+const PALETTES = {
+  terracotta: { name: 'Aged Parchment', short: 'Parchment', desc: 'Terracotta & Forest' },
+  pine:       { name: 'Pine & Amber', short: 'Pine', desc: 'Highland Mist & Rum' },
+  navy:       { name: 'Midnight Navy', short: 'Navy', desc: 'Inkwell & Antique Brass' },
+  espresso:   { name: 'Smoked Espresso', short: 'Espresso', desc: 'Tobacco Ash & Whiskey' },
+  burgundy:   { name: 'Vintage Burgundy', short: 'Burgundy', desc: 'Wine Stain & Pressed Rose' },
+};
+
+function initPalette() {
+  const saved = localStorage.getItem('sur-lyng-a-palette') || 'pine';
+  applyPalette(saved, false);
+}
+
+function applyPalette(paletteKey, notify = true) {
+  if (!PALETTES[paletteKey]) paletteKey = 'pine';
+  document.documentElement.setAttribute('data-palette', paletteKey);
+  localStorage.setItem('sur-lyng-a-palette', paletteKey);
+
+  // Update active state in menu
+  $$('.palette-option').forEach(btn => {
+    const isActive = btn.dataset.palette === paletteKey;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+
+  // Update button label
+  if (dom.paletteCurrentLabel && PALETTES[paletteKey]) {
+    dom.paletteCurrentLabel.textContent = PALETTES[paletteKey].short;
+  }
+
+  // Keep theme toggle tooltip informative
+  updateThemeLabels();
+
+  if (notify) {
+    showToast(`Palette: ${PALETTES[paletteKey].name} ◆`);
+  }
+}
+
 function initTheme() {
   const saved = localStorage.getItem('sur-lyng-a-theme') || 'light';
   applyTheme(saved);
 }
 
-function applyTheme(mode) {
-  document.documentElement.setAttribute('data-theme', mode === 'dark' ? 'dark' : '');
+function updateThemeLabels() {
   const btn = dom.themeToggle;
   if (!btn) return;
-  if (mode === 'dark') {
-    btn.title = 'Switch to Aged Parchment (Light)';
-    btn.querySelector('.theme-label').textContent = 'Parchment';
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const paletteKey = document.documentElement.getAttribute('data-palette') || 'pine';
+  const paletteName = PALETTES[paletteKey]?.short || 'Daylight';
+
+  if (isDark) {
+    btn.title = `Switch to Daylight reading mode (${paletteName})`;
+    btn.querySelector('.theme-label').textContent = 'Daylight';
   } else {
-    btn.title = 'Switch to Candlelight (Dark)';
+    btn.title = 'Switch to Candlelight (Dark reading mode)';
     btn.querySelector('.theme-label').textContent = 'Candlelight';
   }
+}
+
+function applyTheme(mode) {
+  document.documentElement.setAttribute('data-theme', mode === 'dark' ? 'dark' : '');
+  updateThemeLabels();
   localStorage.setItem('sur-lyng-a-theme', mode);
 }
 
@@ -555,6 +605,49 @@ function escapeHtml(str) {
    EVENT WIRING
    ============================================================ */
 function wireEvents() {
+  // Palette dropdown
+  const togglePaletteMenu = (force) => {
+    if (!dom.paletteBtn || !dom.paletteMenu) return;
+    const isExpanded = dom.paletteBtn.getAttribute('aria-expanded') === 'true';
+    const shouldOpen = typeof force === 'boolean' ? force : !isExpanded;
+    dom.paletteBtn.setAttribute('aria-expanded', String(shouldOpen));
+    if (shouldOpen) {
+      dom.paletteMenu.removeAttribute('hidden');
+      requestAnimationFrame(() => dom.paletteMenu.classList.add('open'));
+    } else {
+      dom.paletteMenu.classList.remove('open');
+      setTimeout(() => {
+        if (!dom.paletteMenu.classList.contains('open')) {
+          dom.paletteMenu.setAttribute('hidden', '');
+        }
+      }, 150);
+    }
+  };
+
+  dom.paletteBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePaletteMenu();
+  });
+
+  $$('.palette-option').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const palette = btn.dataset.palette;
+      if (palette) {
+        applyPalette(palette);
+        togglePaletteMenu(false);
+        dom.paletteBtn?.focus();
+      }
+    });
+  });
+
+  // Close palette dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (dom.paletteDropdown && !dom.paletteDropdown.contains(e.target)) {
+      togglePaletteMenu(false);
+    }
+  });
+
   // Theme toggle
   dom.themeToggle?.addEventListener('click', toggleTheme);
 
@@ -624,11 +717,19 @@ function wireEvents() {
     if (id) openPoem(id);
   });
 
-  // Keyboard escape to close reader
+  // Keyboard escape
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      if (state.drawerOpen) closeDrawer();
-      else if (dom.readerOverlay.classList.contains('open')) closePoem();
+      if (dom.paletteMenu && dom.paletteMenu.classList.contains('open')) {
+        dom.paletteBtn?.setAttribute('aria-expanded', 'false');
+        dom.paletteMenu.classList.remove('open');
+        dom.paletteMenu.setAttribute('hidden', '');
+        dom.paletteBtn?.focus();
+      } else if (state.drawerOpen) {
+        closeDrawer();
+      } else if (dom.readerOverlay.classList.contains('open')) {
+        closePoem();
+      }
     }
   });
 
@@ -691,6 +792,7 @@ function wireEvents() {
    INIT
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
+  initPalette();
   initTheme();
   loadBookmarks();
   updateFilterCounts();

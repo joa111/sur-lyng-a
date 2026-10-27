@@ -36,6 +36,63 @@
 
       <!-- Controls -->
       <div class="pub-topbar-controls">
+        <!-- Palette Switcher -->
+        <div class="palette-dropdown" id="palette-dropdown">
+          <button class="btn-icon palette-btn" id="palette-btn" title="Choose color atmosphere"
+            aria-label="Choose color atmosphere" aria-haspopup="true" aria-expanded="false">
+            <span class="palette-pip" aria-hidden="true"></span>
+            <span class="palette-btn-text">Palette:</span>
+            <span class="palette-current-label" id="palette-current-label">Pine</span>
+            <svg class="palette-chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" />
+            </svg>
+          </button>
+
+          <div class="palette-menu" id="palette-menu" role="menu" aria-label="Choose color atmosphere" hidden>
+            <div class="palette-menu-heading">Color Atmosphere</div>
+            <button class="palette-option" data-palette="terracotta" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#F5EFE6; --prev-accent:#8C2D19; --prev-dark-bg:#161412; --prev-dark-accent:#C86D51;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Aged Parchment</span>
+                <span class="palette-sub">Terracotta &amp; Forest</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option active" data-palette="pine" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#EDF1EB; --prev-accent:#B25D1A; --prev-dark-bg:#111713; --prev-dark-accent:#E08C3C;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Pine &amp; Amber</span>
+                <span class="palette-sub">Highland Mist &amp; Rum</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option" data-palette="navy" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#EFF2F6; --prev-accent:#B3751E; --prev-dark-bg:#0E131C; --prev-dark-accent:#E2A140;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Midnight Navy</span>
+                <span class="palette-sub">Inkwell &amp; Antique Brass</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option" data-palette="espresso" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#F5F0E8; --prev-accent:#A35422; --prev-dark-bg:#15110E; --prev-dark-accent:#DA7935;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Smoked Espresso</span>
+                <span class="palette-sub">Tobacco Ash &amp; Whiskey</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option" data-palette="burgundy" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#F7F1F3; --prev-accent:#8C2440; --prev-dark-bg:#171015; --prev-dark-accent:#D4587B;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Vintage Burgundy</span>
+                <span class="palette-sub">Wine Stain &amp; Pressed Rose</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Bookmark Drawer trigger -->
         <button class="btn-icon" id="bookmark-drawer-btn" title="Open bookmarks drawer"
           aria-label="Open bookmarks drawer" aria-haspopup="dialog">

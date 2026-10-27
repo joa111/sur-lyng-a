@@ -7,19 +7,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=EB+Garamond:ital,wght@0,400;1,400&family=Courier+Prime:ital,wght@0,400;1,400&display=swap');
 
 /* ============================================================
-   1. CUSTOM PROPERTIES — LIGHT MODE (Default: Aged Parchment)
+   1. CUSTOM PROPERTIES & PALETTES
    ============================================================ */
-:root {
-  --bg-primary:       #F5EFE6;
-  --bg-elevated:      #EBE3D5;
-  --bg-overlay:       rgba(245, 239, 230, 0.96);
-  --text-primary:     #1E1B18;
-  --text-secondary:   #5C5346;
-  --accent-primary:   #8C2D19;
-  --accent-secondary: #2D4030;
-  --border-hairline:  rgba(30, 27, 24, 0.16);
-  --border-double:    rgba(30, 27, 24, 0.22);
 
+/* Base typography, rhythm, and layout variables */
+:root {
   --font-display:  'Cormorant Garamond', 'Georgia', serif;
   --font-body:     'EB Garamond', 'Georgia', serif;
   --font-mono:     'Courier Prime', 'Courier New', monospace;
@@ -42,8 +34,25 @@
   --max-wide:   72rem;
 }
 
-/* ── Dark Mode Override (Midnight Ink / Candlelight) ── */
-[data-theme="dark"] {
+/* ────────────────────────────────────────────────────────────
+   PALETTE 1: AGED PARCHMENT (Classic Terracotta & Forest)
+   ──────────────────────────────────────────────────────────── */
+:root,
+[data-palette="terracotta"] {
+  --bg-primary:       #F5EFE6;
+  --bg-elevated:      #EBE3D5;
+  --bg-overlay:       rgba(245, 239, 230, 0.96);
+  --text-primary:     #1E1B18;
+  --text-secondary:   #5C5346;
+  --accent-primary:   #8C2D19;
+  --accent-secondary: #2D4030;
+  --accent-contrast:  #FFFFFF;
+  --accent-subtle:    rgba(140, 45, 25, 0.08);
+  --border-hairline:  rgba(30, 27, 24, 0.16);
+  --border-double:    rgba(30, 27, 24, 0.22);
+}
+[data-theme="dark"],
+[data-palette="terracotta"][data-theme="dark"] {
   --bg-primary:       #161412;
   --bg-elevated:      #211E1B;
   --bg-overlay:       rgba(22, 20, 18, 0.97);
@@ -51,8 +60,130 @@
   --text-secondary:   #9E9382;
   --accent-primary:   #C86D51;
   --accent-secondary: #7AAD85;
+  --accent-contrast:  #161412;
+  --accent-subtle:    rgba(200, 109, 81, 0.12);
   --border-hairline:  rgba(232, 223, 202, 0.14);
   --border-double:    rgba(232, 223, 202, 0.20);
+}
+
+/* ────────────────────────────────────────────────────────────
+   PALETTE 2: PINE & AMBER (Highland Mist & Rum)
+   ──────────────────────────────────────────────────────────── */
+[data-palette="pine"] {
+  --bg-primary:       #EDF1EB;
+  --bg-elevated:      #E1E8DF;
+  --bg-overlay:       rgba(237, 241, 235, 0.96);
+  --text-primary:     #18221B;
+  --text-secondary:   #47574B;
+  --accent-primary:   #B25D1A;
+  --accent-secondary: #2B4E38;
+  --accent-contrast:  #FFFFFF;
+  --accent-subtle:    rgba(178, 93, 26, 0.09);
+  --border-hairline:  rgba(24, 34, 27, 0.16);
+  --border-double:    rgba(24, 34, 27, 0.22);
+}
+[data-palette="pine"][data-theme="dark"] {
+  --bg-primary:       #111713;
+  --bg-elevated:      #1A231D;
+  --bg-overlay:       rgba(17, 23, 19, 0.97);
+  --text-primary:     #DAE4DC;
+  --text-secondary:   #8BA090;
+  --accent-primary:   #E08C3C;
+  --accent-secondary: #6EA77E;
+  --accent-contrast:  #111713;
+  --accent-subtle:    rgba(224, 140, 60, 0.12);
+  --border-hairline:  rgba(218, 228, 220, 0.14);
+  --border-double:    rgba(218, 228, 220, 0.20);
+}
+
+/* ────────────────────────────────────────────────────────────
+   PALETTE 3: MIDNIGHT NAVY (Inkwell & Antique Brass)
+   ──────────────────────────────────────────────────────────── */
+[data-palette="navy"] {
+  --bg-primary:       #EFF2F6;
+  --bg-elevated:      #E0E7F0;
+  --bg-overlay:       rgba(239, 242, 246, 0.96);
+  --text-primary:     #111A29;
+  --text-secondary:   #48586E;
+  --accent-primary:   #B3751E;
+  --accent-secondary: #2C4A6F;
+  --accent-contrast:  #FFFFFF;
+  --accent-subtle:    rgba(179, 117, 30, 0.09);
+  --border-hairline:  rgba(17, 26, 41, 0.16);
+  --border-double:    rgba(17, 26, 41, 0.22);
+}
+[data-palette="navy"][data-theme="dark"] {
+  --bg-primary:       #0E131C;
+  --bg-elevated:      #171E2B;
+  --bg-overlay:       rgba(14, 19, 28, 0.97);
+  --text-primary:     #DEE6F0;
+  --text-secondary:   #8799B0;
+  --accent-primary:   #E2A140;
+  --accent-secondary: #6392C2;
+  --accent-contrast:  #0E131C;
+  --accent-subtle:    rgba(226, 161, 64, 0.12);
+  --border-hairline:  rgba(222, 230, 240, 0.14);
+  --border-double:    rgba(222, 230, 240, 0.20);
+}
+
+/* ────────────────────────────────────────────────────────────
+   PALETTE 4: SMOKED ESPRESSO (Tobacco Ash & Whiskey)
+   ──────────────────────────────────────────────────────────── */
+[data-palette="espresso"] {
+  --bg-primary:       #F5F0E8;
+  --bg-elevated:      #E9E1D2;
+  --bg-overlay:       rgba(245, 240, 232, 0.96);
+  --text-primary:     #211914;
+  --text-secondary:   #5C4D41;
+  --accent-primary:   #A35422;
+  --accent-secondary: #523D2F;
+  --accent-contrast:  #FFFFFF;
+  --accent-subtle:    rgba(163, 84, 34, 0.09);
+  --border-hairline:  rgba(33, 25, 20, 0.16);
+  --border-double:    rgba(33, 25, 20, 0.22);
+}
+[data-palette="espresso"][data-theme="dark"] {
+  --bg-primary:       #15110E;
+  --bg-elevated:      #221C18;
+  --bg-overlay:       rgba(21, 17, 14, 0.97);
+  --text-primary:     #ECE1D1;
+  --text-secondary:   #A08E7E;
+  --accent-primary:   #DA7935;
+  --accent-secondary: #9B7759;
+  --accent-contrast:  #15110E;
+  --accent-subtle:    rgba(218, 121, 53, 0.12);
+  --border-hairline:  rgba(236, 225, 209, 0.14);
+  --border-double:    rgba(236, 225, 209, 0.20);
+}
+
+/* ────────────────────────────────────────────────────────────
+   PALETTE 5: VINTAGE BURGUNDY (Wine Stain & Pressed Rose)
+   ──────────────────────────────────────────────────────────── */
+[data-palette="burgundy"] {
+  --bg-primary:       #F7F1F3;
+  --bg-elevated:      #EBE1E4;
+  --bg-overlay:       rgba(247, 241, 243, 0.96);
+  --text-primary:     #24141B;
+  --text-secondary:   #5F4650;
+  --accent-primary:   #8C2440;
+  --accent-secondary: #4A303D;
+  --accent-contrast:  #FFFFFF;
+  --accent-subtle:    rgba(140, 36, 64, 0.09);
+  --border-hairline:  rgba(36, 20, 27, 0.16);
+  --border-double:    rgba(36, 20, 27, 0.22);
+}
+[data-palette="burgundy"][data-theme="dark"] {
+  --bg-primary:       #171015;
+  --bg-elevated:      #241A21;
+  --bg-overlay:       rgba(23, 16, 21, 0.97);
+  --text-primary:     #E9DBDF;
+  --text-secondary:   #A38992;
+  --accent-primary:   #D4587B;
+  --accent-secondary: #9E6B7D;
+  --accent-contrast:  #171015;
+  --accent-subtle:    rgba(212, 88, 123, 0.12);
+  --border-hairline:  rgba(233, 219, 223, 0.14);
+  --border-double:    rgba(233, 219, 223, 0.20);
 }
 
 /* ============================================================
@@ -191,6 +322,195 @@ img { max-width: 100%; display: block; }
   width: 13px;
   height: 13px;
   flex-shrink: 0;
+}
+
+/* ── Palette Switcher Dropdown ── */
+.palette-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.palette-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.35rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.palette-btn:hover,
+.palette-btn[aria-expanded="true"] {
+  color: var(--text-primary);
+  border-color: var(--border-double);
+  background: var(--bg-primary);
+}
+
+.palette-pip {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  display: inline-block;
+  box-shadow: 0 0 0 1px var(--border-double);
+  flex-shrink: 0;
+  transition: background-color var(--transition-base);
+}
+
+.palette-btn-text {
+  opacity: 0.75;
+}
+
+.palette-current-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.palette-chevron {
+  width: 8px;
+  height: 5px;
+  margin-left: 0.1rem;
+  transition: transform var(--transition-fast);
+  opacity: 0.6;
+}
+.palette-btn[aria-expanded="true"] .palette-chevron {
+  transform: rotate(180deg);
+}
+
+.palette-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 260px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-double);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+  backdrop-filter: blur(8px);
+}
+
+.palette-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.palette-menu-heading {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  padding: 0.3rem 0.5rem 0.25rem;
+  border-bottom: 1px solid var(--border-hairline);
+  margin-bottom: 0.25rem;
+}
+
+.palette-option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.45rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.palette-option:hover,
+.palette-option:focus-visible {
+  background: var(--bg-primary);
+  border-color: var(--border-hairline);
+  outline: none;
+}
+
+.palette-option.active {
+  background: var(--bg-primary);
+  border-color: var(--border-double);
+}
+
+.palette-preview {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-hairline);
+  flex-shrink: 0;
+  background: var(--prev-bg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.palette-preview::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: var(--prev-accent);
+}
+
+[data-theme="dark"] .palette-preview {
+  background: var(--prev-dark-bg, var(--prev-bg));
+}
+[data-theme="dark"] .palette-preview::after {
+  background: var(--prev-dark-accent, var(--prev-accent));
+}
+
+.palette-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.palette-name {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+
+.palette-sub {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.palette-check {
+  font-size: 0.65rem;
+  color: var(--accent-primary);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.palette-option.active .palette-check {
+  opacity: 1;
 }
 
 /* ── Masthead ── */
@@ -463,10 +783,7 @@ img { max-width: 100%; display: block; }
 .search-input::placeholder { color: var(--text-secondary); opacity: 0.7; }
 .search-input:focus {
   border-color: var(--border-double);
-  box-shadow: 0 0 0 2px rgba(140, 45, 25, 0.08);
-}
-[data-theme="dark"] .search-input:focus {
-  box-shadow: 0 0 0 2px rgba(200, 109, 81, 0.1);
+  box-shadow: 0 0 0 2px var(--accent-subtle);
 }
 
 .search-icon {
@@ -506,7 +823,7 @@ img { max-width: 100%; display: block; }
 .filter-pill.active {
   background: var(--accent-primary);
   border-color: var(--accent-primary);
-  color: #fff;
+  color: var(--accent-contrast, #fff);
 }
 
 .filter-count {
@@ -878,10 +1195,7 @@ img { max-width: 100%; display: block; }
 .reader-control-btn.bookmarked {
   color: var(--accent-primary);
   border-color: var(--accent-primary);
-  background: rgba(140, 45, 25, 0.07);
-}
-[data-theme="dark"] .reader-control-btn.bookmarked {
-  background: rgba(200, 109, 81, 0.1);
+  background: var(--accent-subtle);
 }
 
 .reader-control-btn svg { width: 14px; height: 14px; }
@@ -1368,11 +1682,31 @@ pre.reader-poem-body {
     gap: 0.4rem;
   }
 
-  .btn-icon {
+  .btn-icon,
+  .palette-btn {
     min-height: 38px;
-    padding: 0.4rem 0.65rem;
+    padding: 0.4rem 0.55rem;
     font-size: 0.62rem;
     touch-action: manipulation;
+  }
+
+  @media (max-width: 520px) {
+    .palette-menu {
+      right: -40px;
+      width: 240px;
+    }
+  }
+
+  @media (max-width: 440px) {
+    .palette-btn-text,
+    .pub-topbar-controls .theme-label,
+    #bookmark-drawer-btn > span:not(#bookmark-count) {
+      display: none;
+    }
+    .palette-menu {
+      right: -80px;
+      width: 230px;
+    }
   }
 
   .masthead {
