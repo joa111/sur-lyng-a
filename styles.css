@@ -1504,12 +1504,30 @@ pre.reader-poem-body {
   gap: var(--spacing-sm);
   color: var(--text-secondary);
   position: relative;
+  padding: var(--spacing-md);
 }
 .about-portrait-frame::before {
   content: '';
   position: absolute;
   inset: 5px;
   border: 1px solid var(--border-hairline);
+  pointer-events: none;
+}
+
+.about-logo-img {
+  max-width: 140px;
+  width: 68%;
+  height: auto;
+  display: block;
+  z-index: 1;
+  opacity: 0.9;
+  transition: opacity var(--transition-base), filter var(--transition-base);
+}
+.about-portrait-frame:hover .about-logo-img {
+  opacity: 1;
+}
+[data-theme="dark"] .about-logo-img {
+  filter: invert(0.92);
 }
 
 .portrait-icon {
