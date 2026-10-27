@@ -24,44 +24,11 @@ const POEMS = [
   {
     id: 24,
     catalogNumber: "No. 24",
-    title: "props",
-    date: "March 2026",
-    theme: "Midnight",
-    featured: false,
-    epigraph: {
-      text: "Is all that we see or seem / But a dream within a dream?",
-      attribution: "— Edgar Allan Poe, A Dream Within a Dream"
-    },
-    body: `I dreamt waking up next to you,
-
-I rubbed my eyes, twice
-thrice and still doesnt feel suffice..
-
-that warm breeze of your breath,
-and the maze of your ear.
-
-Ran my finger through your face,
-trying to feel the divine structure and glaze.
-
-I reach the lips and gently embrace
-of what look like the sweetest nectar ever grace.
-
-kiss of life.
-
-feels surreal i can still feel the touch of your hair.`,
-    marginNote: "What if I told you I loved you?",
-    readingTime: "1 min"
-  },
-
-  {
-    id: 23,
-    catalogNumber: "No. 23",
     title: "Untitled",
-    date: "September 2025",
+    date: "July 2026",
     theme: "Love & Loss",
     featured: false,
     epigraph: null,
-    // ⚠ Last line looks like filler/placeholder text — keep or cut?
     body: `you exist in the prettiest way possible.
 do i have what it takes?
 i attracted darkness on my way.
@@ -74,12 +41,11 @@ bow stat thait lias bong ass titties.`,
   },
 
   {
-    id: 22,
-    catalogNumber: "No. 22",
+    id: 23,
+    catalogNumber: "No. 23",
     title: "dait dor",
-    date: "September 2025",
-    theme: "Love & Loss",
-    // ⚠ theme is a best guess — please confirm
+    date: "July 2026",
+    theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
     body: `Da kot u ap iei ktien iei thylliej
@@ -91,12 +57,11 @@ te sieh oa ha u nud.`,
   },
 
   {
-    id: 21,
-    catalogNumber: "No. 21",
+    id: 22,
+    catalogNumber: "No. 22",
     title: "bynta wa so",
-    date: "September 2025",
-    theme: "Solitude",
-    // ⚠ theme is a best guess — please confirm
+    date: "July 2026",
+    theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
     body: `Waroh da dep.
@@ -119,12 +84,11 @@ Chihajar ngooh.`,
   },
 
   {
-    id: 20,
-    catalogNumber: "No. 20",
+    id: 21,
+    catalogNumber: "No. 21",
     title: "bynta wa lē",
-    date: "September 2025",
-    theme: "Nostalgia",
-    // ⚠ theme is a best guess — please confirm
+    date: "July 2026",
+    theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
     body: `da toh i por, i por wa pynbor;
@@ -141,12 +105,11 @@ nga leh kwah oa u lai pynsawa.`,
   },
 
   {
-    id: 19,
-    catalogNumber: "No. 19",
+    id: 20,
+    catalogNumber: "No. 20",
     title: "bynta wa-ar",
-    date: "September 2025",
-    theme: "Nature",
-    // ⚠ theme is a best guess — please confirm
+    date: "July 2026",
+    theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
     body: `wa-ar
@@ -179,12 +142,11 @@ kyrwoh na dohnud.`,
   },
 
   {
-    id: 18,
-    catalogNumber: "No. 18",
+    id: 19,
+    catalogNumber: "No. 19",
     title: "bynta 1",
-    date: "September 2025",
-    theme: "Love & Loss",
-    // ⚠ theme is a best guess — please confirm
+    date: "July 2026",
+    theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
     body: `i wa sih moa u kyrmen pathar?
@@ -201,16 +163,13 @@ ryngkat wei jingkmen wa thaba wa phyrnai`,
   },
 
   {
-    id: 17,
-    catalogNumber: "No. 17",
+    id: 18,
+    catalogNumber: "No. 18",
     title: "her, and my consistent effort to make believe",
-    date: "September 2025",
+    date: "March 2026",
     theme: "Love & Loss",
     featured: false,
-    epigraph: {
-      text: "It is an ever-fixed mark, / That looks on tempests and is never shaken",
-      attribution: "— William Shakespeare, Sonnet 116"
-    },
+    epigraph: null,
     body: `She fits into my life like a daily routine.
 She feels like a part of my every day.
 I need to hear her breath,
@@ -224,16 +183,42 @@ and if ive seen her, she wouldnt see me.`,
   },
 
   {
+    id: 17,
+    catalogNumber: "No. 17",
+    title: "props",
+    date: "March 2026",
+    theme: "Midnight",
+    featured: false,
+    epigraph: null,
+    body: `I dreamt waking up next to you,
+
+I rubbed my eyes, twice
+thrice and still doesnt feel suffice..
+
+that warm breeze of your breath,
+and the maze of your ear.
+
+Ran my finger through your face,
+trying to feel the divine structure and glaze.
+
+I reach the lips and gently embrace
+of what look like the sweetest nectar ever grace.
+
+kiss of life.
+
+feels surreal i can still feel the touch of your hair.`,
+    marginNote: "What if I told you I loved you?",
+    readingTime: "1 min"
+  },
+
+  {
     id: 16,
     catalogNumber: "No. 16",
-    title: "Untitled",
+    title: "Untitled-2",
     date: "September 2025",
     theme: "Nature",
     featured: false,
-    epigraph: {
-      text: "Life, like a dome of many-coloured glass, / Stains the white radiance of Eternity",
-      attribution: "— Percy Bysshe Shelley, Adonais"
-    },
+    epigraph: null,
     body: `That beam of light, a single source
 came through like an isekai truck.
 Reflected through him, diverged
@@ -315,7 +300,7 @@ a non believer of your love.`,
   {
     id: 13,
     catalogNumber: "No. 13",
-    title: "Untitled",
+    title: "Untitled-1",
     date: "February 2025",
     theme: "Solitude",
     featured: false,
@@ -393,14 +378,11 @@ it is a gentle teacher behind the violent cry.`,
   {
     id: 10,
     catalogNumber: "No. 10",
-    title: "Ordinary",
+    title: "Absence",
     date: "January 2025",
     theme: "Love & Loss",
     featured: false,
-    epigraph: {
-      text: "I found myself within a forest dark, / For the straightforward pathway had been lost.",
-      attribution: "— Dante, Inferno (trans. Longfellow)"
-    },
+    epigraph: null,
     body: `Lost, but never wanting to be found.
 Amidst the chaos, perhaps I'm bound
 to wander this mysterious, unending path,
@@ -414,7 +396,7 @@ yet all dissolve into distant evanescence.
 I strive to recall each detail intently,
 but remember everything and nothing, gently.`,
     marginNote: "Remembering everything and nothing at the same time.",
-    readingTime: "3 min"
+    readingTime: "1 min"
   },
 
   {
@@ -424,10 +406,7 @@ but remember everything and nothing, gently.`,
     date: "December 2024",
     theme: "Love & Loss",
     featured: false,
-    epigraph: {
-      text: "All the world's a stage, / And all the men and women merely players.",
-      attribution: "— William Shakespeare, As You Like It"
-    },
+    epigraph: null,
     body: `Hand quivers when I try to flow my pen these days.
 Distinguish on paper, dumb in soul. But I pray,
 hoping she atleast heed the sound of my chord.
@@ -435,7 +414,7 @@ It has always been mightier than the sword.
 Many died by words rather than metals meant to slay.
 But now everything, if nothing, is more than a mere play.`,
     marginNote: "The hand shakes, but the pen keeps moving.",
-    readingTime: "3 min"
+    readingTime: "1 min"
   },
 
   {
@@ -445,10 +424,7 @@ But now everything, if nothing, is more than a mere play.`,
     date: "July 2023",
     theme: "Solitude",
     featured: false,
-    epigraph: {
-      text: "Life's but a walking shadow",
-      attribution: "— William Shakespeare, Macbeth"
-    },
+    epigraph: null,
     body: `How blessed am I.
 
 Am I a presence or just a whisper?
@@ -472,7 +448,7 @@ Is the purest inquiry not what is,
 
 But simply where....?`,
     marginNote: "Can you be missed and still never have been there?",
-    readingTime: "3 min"
+    readingTime: "1 min"
   },
 
   {
@@ -482,10 +458,7 @@ But simply where....?`,
     date: "January 2023",
     theme: "Nostalgia",
     featured: false,
-    epigraph: {
-      text: "To me the meanest flower that blows can give / Thoughts that do often lie too deep for tears.",
-      attribution: "— William Wordsworth, Ode: Intimations of Immortality"
-    },
+    epigraph: null,
     body: `Find joy in the commons,
 Perhaps everything will color,
 Be the one who summons
@@ -512,7 +485,7 @@ To be as magnificent as you,
 Is that not enough?
 To live without the pressure of the score,
 To embrace life, wanting nothing more?`,
-    marginNote: "Semester's eating me alive, so I stopped and took a look around, and realized maybe the point isn't to win, but to enjoy.",
+    marginNote: "Semester's eating me alive, so I stopped.",
     readingTime: "3 min"
   },
 
@@ -523,10 +496,7 @@ To embrace life, wanting nothing more?`,
     date: "January 2023",
     theme: "Love & Loss",
     featured: false,
-    epigraph: {
-      text: "Doubt truth to be a liar; / But never doubt I love.",
-      attribution: "— William Shakespeare, Hamlet"
-    },
+    epigraph: null,
     body: `When you act from pity, is it a debt I must repay?
 
 When you act from love, is there any debt to begin with?
@@ -563,10 +533,7 @@ Tell me... Is meaning found, or do we carve it from the void with trembling hand
     date: "December 2021",
     theme: "Love & Loss",
     featured: false,
-    epigraph: {
-      text: "The heart has its reasons, which reason knows nothing of.",
-      attribution: "— Blaise Pascal, Pensées"
-    },
+    epigraph: null,
     body: `This bloody organ,
 continuously beating,
 when he thinks of her,
@@ -602,10 +569,7 @@ upon encountering her aura.`,
     date: "December 2021",
     theme: "Nostalgia",
     featured: false,
-    epigraph: {
-      text: "I summon up remembrance of things past",
-      attribution: "— William Shakespeare, Sonnet 30"
-    },
+    epigraph: null,
     body: `A woman, with two jugs of ale,
 came to me, per chance with a tale?
 No, she said here's a beautiful pint
@@ -631,10 +595,7 @@ Embrace truth's call, i shall put it to the grave.`,
     date: "September 2021",
     theme: "Love & Loss",
     featured: false,
-    epigraph: {
-      text: "Ah, but a man's reach should exceed his grasp, / Or what's a heaven for?",
-      attribution: "— Robert Browning, Andrea del Sarto"
-    },
+    epigraph: null,
     body: `The wind was howling,
 Carried away all the meaning.
 Plenty of questions,
@@ -691,10 +652,7 @@ when I can see you again`,
     date: "August 2020",
     theme: "Nature",
     featured: true,
-    epigraph: {
-      text: "Blow, winds, and crack your cheeks! Rage! Blow!",
-      attribution: "— William Shakespeare, King Lear"
-    },
+    epigraph: null,
     body: `*thunderstorm noise*
 
 The savior (whose?), so disastrous,
