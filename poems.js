@@ -16,27 +16,76 @@
  *    or remove the key if not needed.
  *  • `epigraph` format: { text: "...", attribution: "— Author, Source" }
  *  • `theme` must be one of:
- *      'Nostalgia' | 'Midnight' | 'Nature' | 'Love & Loss' | 'Solitude'
+ *      'tdong duma' | 'kiad-so' | 'kyntien wym lait' | 'Mei Ram-ew'
  * ============================================================
  */
 
 const POEMS = [
   {
+    id: 25,
+    catalogNumber: "No. 25",
+    title: "the apathy of sins",
+    date: "October 2026",
+    theme: "tdong duma",
+    featured: true,
+    epigraph: null,
+    body: `Comfort in this house
+was bought with someone else's loss.
+Admiring my reflection in the glass,
+blinded by who stands shivering in the cold.
+
+The mind is a captive
+of its own oligarchy.
+A saint i may be in one room,
+and a devil incarnate in the next.
+
+Perspectives and empathy drawn
+like a border line across dirt.
+On and on, i tend my own fence.
+learnt what resides
+and belongs only mine,
+overlooking the rest.
+
+Is it sin
+to feed your own mouth first
+or a question only hunger can answer?
+Is availing your own
+would be considered selfishness?
+
+A repeated sin stops carrying venom.
+They become the usual mist
+settling over the pine trees,
+where nothing screams or bleeds,
+no longer born from malice,
+but from numbness.`,
+    marginNote: "On envying others, and the complexities of existence",
+    readingTime: "2 min"
+  },
+  {
     id: 24,
     catalogNumber: "No. 24",
-    title: "Untitled",
-    date: "July 2026",
-    theme: "Love & Loss",
+    title: "Places",
+    date: "August 2026",
+    theme: "kiad-so",
     featured: false,
     epigraph: null,
-    body: `you exist in the prettiest way possible.
-do i have what it takes?
-i attracted darkness on my way.
-ruins and destruction are what i reap. But its not what i sow.
-Would i be selfless enough to convince Him?
-or would i be selfish to let it be?
-bow stat thait lias bong ass titties.`,
-    marginNote: "Selfless or selfish — I still can't tell which this is.",
+    body: `Welcomed by a cat,
+Felt soft fur as a greeting. 
+Entered the flat.
+Mesmerized by the sighting,
+a tear dropped,
+unintentionally, incontrollably.
+How can something, 
+such simple magic truly exist? 
+She exists...
+In my head, the place is her. 
+It breathes her, it speaks of her,
+It cries of her and dreams of her. 
+The people, the houses,
+the animals and the hustle
+the traffic and the quiet corners
+they all breathe her name.`,
+    marginNote: null,
     readingTime: "2 min"
   },
 
@@ -79,7 +128,7 @@ Waroh kiwa da lum da thup oa ha ka por wa ioh oa, iwa ym ye oa u buhrieh lane th
 Wan oa heini u pyndep ia i jingthmu iong U, te man i ite u wow pynio oa ia U.
 A wa na jrong, lynter u man oa u bru wym hun hei ni i thuh ia i jingtip.
 Chihajar ngooh.`,
-    marginNote: "Continuing the Khasi series.",
+    marginNote: "Continuing the Pnar series.",
     readingTime: "2 min"
   },
 
@@ -100,7 +149,7 @@ da toh i por, i por ka iahba.
 dap ko u snem rupa.
 toh lah wei man i por wa sniawbha,
 nga leh kwah oa u lai pynsawa.`,
-    marginNote: "Continuing the Khasi series.",
+    marginNote: "Continuing the Pnar series.",
     readingTime: "2 min"
   },
 
@@ -137,7 +186,7 @@ ka rta pu thngad ko u thngan ko u dawa
 iei kam iei kamai u ioh ja.
 
 kyrwoh na dohnud.`,
-    marginNote: "Continuing the Khasi series.",
+    marginNote: "Continuing the Pnar series.",
     readingTime: "2 min"
   },
 
@@ -158,7 +207,7 @@ tang ha phi? i jingjet wa maia duh
 ha waroh ki jingkwah wei jingthrang wa bha iong nga
 heini kbai joor oa kat wa ye ki bor
 ryngkat wei jingkmen wa thaba wa phyrnai`,
-    marginNote: "The first part of a series written in Khasi.",
+    marginNote: "The first part of a series written in Pnar.",
     readingTime: "2 min"
   },
 
@@ -167,17 +216,11 @@ ryngkat wei jingkmen wa thaba wa phyrnai`,
     catalogNumber: "No. 18",
     title: "her, and my consistent effort to make believe",
     date: "March 2026",
-    theme: "Love & Loss",
+    theme: "kiad-so",
     featured: false,
     epigraph: null,
-    body: `She fits into my life like a daily routine.
-She feels like a part of my every day.
-I need to hear her breath,
-I need to hear her move.
-For that means she’s alive,
-And that love is alive.
-Wish i wouldve seen her by the path,
-and if ive seen her, she wouldnt see me.`,
+    body: `i love my dawgs.
+thank u, the end.`,
     marginNote: "Love as routine, not fireworks.",
     readingTime: "2 min"
   },
@@ -187,7 +230,7 @@ and if ive seen her, she wouldnt see me.`,
     catalogNumber: "No. 17",
     title: "props",
     date: "March 2026",
-    theme: "Midnight",
+    theme: "kiad-so",
     featured: false,
     epigraph: null,
     body: `I dreamt waking up next to you,
@@ -216,7 +259,7 @@ feels surreal i can still feel the touch of your hair.`,
     catalogNumber: "No. 16",
     title: "Untitled-2",
     date: "September 2025",
-    theme: "Nature",
+    theme: "Mei Ram-ew",
     featured: false,
     epigraph: null,
     body: `That beam of light, a single source
@@ -242,7 +285,7 @@ We move along. Just to prolong, of what can be born, in this unfaithful dorm, th
     catalogNumber: "No. 15",
     title: "Tour",
     date: "September 2025",
-    theme: "Midnight",
+    theme: "tdong duma",
     featured: false,
     epigraph: {
       text: "We're all mad here.",
@@ -278,7 +321,7 @@ I hailed a cab and called it home.`,
     catalogNumber: "No. 14",
     title: "demise",
     date: "March 2025",
-    theme: "Love & Loss",
+    theme: "kiad-so",
     featured: false,
     epigraph: {
       text: "The desire of the moth for the star",
@@ -302,7 +345,7 @@ a non believer of your love.`,
     catalogNumber: "No. 13",
     title: "Untitled-1",
     date: "February 2025",
-    theme: "Solitude",
+    theme: "tdong duma",
     featured: false,
     epigraph: null,
     body: `Who are you when no one is looking?
@@ -317,7 +360,7 @@ What remains when nobody's looking?`,
     catalogNumber: "No. 12",
     title: "Fiery, Starry, January",
     date: "January 2025",
-    theme: "Midnight",
+    theme: "tdong duma",
     featured: false,
     epigraph: {
       text: "We are all in the gutter, but some of us are looking at the stars.",
@@ -348,7 +391,7 @@ ready for marvellous heights.
 
 Dreams;
 taste like sweet cream`,
-    marginNote: "Jupiter is prominently visible tonight, a dim light.",
+    marginNote: "Jupiter is prominently visible tonight, a dim light tho.",
     readingTime: "2 min"
   },
 
@@ -357,7 +400,7 @@ taste like sweet cream`,
     catalogNumber: "No. 11",
     title: "Winter's Warmth",
     date: "January 2025",
-    theme: "Nature",
+    theme: "Mei Ram-ew",
     featured: false,
     epigraph: {
       text: "If Winter comes, can Spring be far behind?",
@@ -380,7 +423,7 @@ it is a gentle teacher behind the violent cry.`,
     catalogNumber: "No. 10",
     title: "Absence",
     date: "January 2025",
-    theme: "Love & Loss",
+    theme: "tdong duma",
     featured: false,
     epigraph: null,
     body: `Lost, but never wanting to be found.
@@ -404,7 +447,7 @@ but remember everything and nothing, gently.`,
     catalogNumber: "No. 09",
     title: "Ordinary",
     date: "December 2024",
-    theme: "Love & Loss",
+    theme: "kiad-so",
     featured: false,
     epigraph: null,
     body: `Hand quivers when I try to flow my pen these days.
@@ -421,8 +464,8 @@ But now everything, if nothing, is more than a mere play.`,
     id: 8,
     catalogNumber: "No. 08",
     title: "Always never there",
-    date: "July 2023",
-    theme: "Solitude",
+    date: "December 2023",
+    theme: "tdong duma",
     featured: false,
     epigraph: null,
     body: `How blessed am I.
@@ -455,8 +498,8 @@ But simply where....?`,
     id: 7,
     catalogNumber: "No. 07",
     title: "Ordinary",
-    date: "January 2023",
-    theme: "Nostalgia",
+    date: "August 2023",
+    theme: "tdong duma",
     featured: false,
     epigraph: null,
     body: `Find joy in the commons,
@@ -493,8 +536,8 @@ To embrace life, wanting nothing more?`,
     id: 6,
     catalogNumber: "No. 06",
     title: "INTERVIEW",
-    date: "January 2023",
-    theme: "Love & Loss",
+    date: "August 2023",
+    theme: "tdong duma",
     featured: false,
     epigraph: null,
     body: `When you act from pity, is it a debt I must repay?
@@ -531,7 +574,7 @@ Tell me... Is meaning found, or do we carve it from the void with trembling hand
     catalogNumber: "No. 05",
     title: "organs dysfunction",
     date: "December 2021",
-    theme: "Love & Loss",
+    theme: "kiad-so",
     featured: false,
     epigraph: null,
     body: `This bloody organ,
@@ -567,7 +610,7 @@ upon encountering her aura.`,
     catalogNumber: "No. 04",
     title: "Memoirs",
     date: "December 2021",
-    theme: "Nostalgia",
+    theme: "kiad-so",
     featured: false,
     epigraph: null,
     body: `A woman, with two jugs of ale,
@@ -593,7 +636,7 @@ Embrace truth's call, i shall put it to the grave.`,
     catalogNumber: "No. 03",
     title: "Distant star",
     date: "September 2021",
-    theme: "Love & Loss",
+    theme: "tdong duma",
     featured: false,
     epigraph: null,
     body: `The wind was howling,
@@ -623,7 +666,7 @@ to this uncalculated mystery.`,
     catalogNumber: "No. 02",
     title: "UNIVERSE",
     date: "January 2021",
-    theme: "Love & Loss",
+    theme: "kiad-so",
     featured: false,
     epigraph: {
       text: "The Love which moves the sun and the other stars.",
@@ -650,8 +693,8 @@ when I can see you again`,
     catalogNumber: "No. 01",
     title: "Yin & Yang",
     date: "August 2020",
-    theme: "Nature",
-    featured: true,
+    theme: "Mei Ram-ew",
+    featured: false,
     epigraph: null,
     body: `*thunderstorm noise*
 

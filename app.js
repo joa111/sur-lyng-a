@@ -144,7 +144,7 @@ function updateBookmarkVisuals() {
    FEATURED POEM (Hero)
    ============================================================ */
 function renderFeaturedPoem() {
-  const poem = POEMS.find(p => p.featured);
+  const poem = POEMS.find(p => p.featured) || POEMS[0];
   if (!poem || !dom.heroFeaturedWrap) return;
 
   const previewLines = poem.body.split('\n').filter(l => l.trim()).slice(0, 3).join('\n');
@@ -152,32 +152,74 @@ function renderFeaturedPoem() {
   dom.heroFeaturedWrap.innerHTML = `
     <div class="featured-label">Favour Poem of the Month</div>
     <div class="featured-catalog">${poem.catalogNumber}</div>
-    <h2 class="featured-title">${poem.title}</h2>
+    <h2 class="featured-title">${escapeHtml(poem.title)}</h2>
     <div class="featured-preview">${escapeHtml(previewLines)}…</div>
     <div class="featured-meta">
-      <span class="featured-theme-tag">${poem.theme}</span>
-      <button class="btn-read" data-poem-id="${poem.id}" aria-label="Read ${poem.title}">
+      <span class="featured-theme-tag" role="button" tabindex="0" title="Filter by theme: ${escapeHtml(poem.theme)}">${escapeHtml(poem.theme)}</span>
+      <button class="btn-read" data-poem-id="${poem.id}" aria-label="Read ${escapeHtml(poem.title)}">
         Read Piece →
       </button>
     </div>
   `;
 
-  dom.heroFeaturedWrap.querySelector('.btn-read').addEventListener('click', () => {
+  dom.heroFeaturedWrap.querySelector('.btn-read')?.addEventListener('click', () => {
     openPoem(poem.id);
+  });
+
+  dom.heroFeaturedWrap.querySelector('.featured-theme-tag')?.addEventListener('click', () => {
+    applyFilter(poem.theme);
+    document.getElementById('anthology')?.scrollIntoView({ behavior: 'smooth' });
   });
 }
 
 /* ============================================================
-   FILTERING
+   FILTERING & COUNTS
    ============================================================ */
+function applyFilter(filterName) {
+  state.currentFilter = filterName || 'All';
+  const pills = $$('.filter-pill');
+  pills.forEach(p => {
+    const isMatch = (p.dataset.filter || '').trim().toLowerCase() === state.currentFilter.trim().toLowerCase();
+    p.classList.toggle('active', isMatch);
+    p.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+  });
+  renderPoems();
+}
+
+function updateFilterCounts() {
+  const counts = { all: POEMS.length };
+  POEMS.forEach(poem => {
+    if (poem.theme) {
+      const key = poem.theme.trim().toLowerCase();
+      counts[key] = (counts[key] || 0) + 1;
+    }
+  });
+
+  const pills = $$('.filter-pill');
+  pills.forEach(pill => {
+    const filter = (pill.dataset.filter || '').trim().toLowerCase();
+    const countVal = filter === 'all' ? counts.all : (counts[filter] || 0);
+    let countSpan = pill.querySelector('.filter-count');
+    if (!countSpan) {
+      countSpan = document.createElement('span');
+      countSpan.className = 'filter-count';
+      pill.appendChild(countSpan);
+    }
+    countSpan.textContent = countVal;
+  });
+}
+
 function getFilteredPoems() {
+  const current = (state.currentFilter || 'All').trim().toLowerCase();
   return POEMS.filter(poem => {
-    const matchesFilter = state.currentFilter === 'All' || poem.theme === state.currentFilter;
-    const q = state.searchQuery.toLowerCase();
+    const poemTheme = (poem.theme || '').trim().toLowerCase();
+    const matchesFilter = current === 'all' || poemTheme === current;
+    const q = state.searchQuery.toLowerCase().trim();
     const matchesSearch = !q ||
-      poem.title.toLowerCase().includes(q) ||
-      poem.theme.toLowerCase().includes(q) ||
-      poem.body.toLowerCase().includes(q);
+      (poem.title && poem.title.toLowerCase().includes(q)) ||
+      poemTheme.includes(q) ||
+      (poem.body && poem.body.toLowerCase().includes(q)) ||
+      (poem.catalogNumber && poem.catalogNumber.toLowerCase().includes(q));
     return matchesFilter && matchesSearch;
   });
 }
@@ -219,6 +261,13 @@ function renderTOC(poems) {
         e.preventDefault();
         openPoem(parseInt(row.dataset.poemId, 10));
       }
+    });
+  });
+
+  $$('.toc-tag', dom.tocBody).forEach(tag => {
+    tag.addEventListener('click', e => {
+      e.stopPropagation();
+      applyFilter(tag.textContent.trim());
     });
   });
 }
@@ -266,6 +315,13 @@ function renderGrid(poems) {
         e.preventDefault();
         openPoem(parseInt(card.dataset.poemId, 10));
       }
+    });
+  });
+
+  $$('.card-tag', dom.gridBody).forEach(tag => {
+    tag.addEventListener('click', e => {
+      e.stopPropagation();
+      applyFilter(tag.textContent.trim());
     });
   });
 }
@@ -508,16 +564,9 @@ function wireEvents() {
   dom.drawerBackdrop?.addEventListener('click', closeDrawer);
 
   // Filter pills
-  dom.filterPills.forEach(pill => {
+  $$('.filter-pill').forEach(pill => {
     pill.addEventListener('click', () => {
-      state.currentFilter = pill.dataset.filter;
-      dom.filterPills.forEach(p => {
-        p.classList.remove('active');
-        p.setAttribute('aria-pressed', 'false');
-      });
-      pill.classList.add('active');
-      pill.setAttribute('aria-pressed', 'true');
-      renderPoems();
+      applyFilter(pill.dataset.filter);
     });
   });
 
@@ -644,6 +693,7 @@ function wireEvents() {
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   loadBookmarks();
+  updateFilterCounts();
   renderFeaturedPoem();
   renderPoems();
   renderBookmarkDrawer();

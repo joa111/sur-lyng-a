@@ -370,6 +370,12 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border-hairline);
   padding: 0.2rem 0.5rem;
   border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.featured-theme-tag:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 .btn-read {
@@ -503,6 +509,17 @@ img { max-width: 100%; display: block; }
   color: #fff;
 }
 
+.filter-count {
+  display: inline-block;
+  margin-left: 0.35rem;
+  font-size: 0.58rem;
+  opacity: 0.65;
+  font-weight: normal;
+}
+.filter-pill.active .filter-count {
+  opacity: 0.95;
+}
+
 /* ── View switcher ── */
 .view-switcher {
   display: flex;
@@ -622,6 +639,12 @@ img { max-width: 100%; display: block; }
   padding: 0.15rem 0.4rem;
   border-radius: var(--radius-sm);
   white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.toc-tag:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 .toc-date {
@@ -743,6 +766,11 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.card-tag:hover {
+  color: var(--accent-primary);
 }
 
 .card-date {
