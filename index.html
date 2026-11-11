@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="sur lyng-a — A poetry portfolio and digital chapbook by [joa]" />
-  <title>sur lyng-a — poetry by [joa]</title>
+  <meta name="description" content="sur lyng-a – A poetry portfolio and digital chapbook by joa" />
+  <title>sur lyng-a — poetry by joa</title>
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -161,8 +161,9 @@
     <div class="hero-featured" role="article" aria-label="Featured poem">
       <div id="hero-featured-wrap">
         <!-- Populated by JS -->
-        <div class="featured-label">Featured Poem of the Month</div>
-        <p style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-secondary);">Loading…</p>
+        <div class="featured-label">Featured Poem</div>
+        <p class="featured-loading-msg" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-secondary);">Loading…</p>
+        <noscript><p style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-secondary);">JavaScript is required to display poems.</p></noscript>
       </div>
     </div>
 
@@ -248,7 +249,7 @@
           <div class="toc-col-label">No.</div>
           <div class="toc-col-label">Title</div>
           <div class="toc-col-label">Theme</div>
-          <div class="toc-col-label" style="text-align:right;">Written</div>
+          <div class="toc-col-label" style="text-align:right;">When</div>
         </div>
 
         <!-- Rows populated by JS -->
@@ -260,7 +261,7 @@
       <div class="grid-view" id="grid-body" role="list" aria-label="Poem cards"></div>
 
       <!-- ── EMPTY STATE ── -->
-      <div class="empty-state" id="empty-state" role="status" aria-live="polite">
+      <div class="empty-state" id="empty-state" role="status" aria-live="polite" hidden>
         <p>No poems found.</p>
         <small>Try adjusting your search or filter.</small>
       </div>
@@ -271,9 +272,9 @@
   <hr class="section-rule" />
 
   <!-- ═══════════════════════════════════════════════════════
-     ABOUT THE WANDERER
+     ABOUT BEHIND THE PEN
      ═══════════════════════════════════════════════════════ -->
-  <section class="about-section" id="about" aria-label="About the wanderer">
+  <section class="about-section" id="about" aria-label="Behind the Pen">
     <div class="about-inner">
 
       <!-- Author mark / logo -->
@@ -283,31 +284,25 @@
 
       <!-- Bio text -->
       <div class="about-text">
-        <p class="about-section-label">II. &nbsp;About the Wanderer</p>
-        <h2 class="about-title">[joa]</h2>
+        <p class="about-section-label">II. &nbsp;Behind the Pen</p>
+        
 
         <p class="about-bio">
-          I wouldn’t call myself a poet. I’m just a wanderer with no map, no destination, and a pen.
-          These days that pen is a phone with a keyboard,
-          because it’s the 21st century and my handwriting was never going to win anyone over.
+          I write in English and Khasi/Pnar, mostly after dark, mostly with rum. Rum is the real creative director: without it I stare at a blank screen and think about another peg; with it, I get cold balconies, cigarettes burning down to ash, and questions that only show up when nobody&#x27;s looking. Sometimes they even rhyme.
         </p>
         <p class="about-bio">
-          I write in English and Khasi/Pnar, mostly after dark, and mostly with rum. ill be honest, rum is the real
-          creative director here.
-          Without it I stare at a blank screen and think about another peg. With it, I get cold balconies, cigarettes
-          burning down to ash, and deep questions that show up when nobody’s looking. Sometimes they even rhyme.
+          <em>sur lyng-a</em> is my notebook on the move. It began in the summer of 2021 as a college internship project, made at home in Iongkaluh, and it has been growing ever since.
         </p>
         <p class="about-bio">
-          <em>sur lyng-a</em> is simply my notebook on the move, as well as my summer intership project.
+          <b>No rum was harmed in the making of this website. <em>(It was.)</em></b>
         </p>
-        <p class="about-bio">
-          <b>no rum was harmed in the making of this website <em>(it was).</em></b>
-        </p>
+
+        
 
         <div class="about-links">
           <a href="mailto:gjdkhar@gmail.com" class="about-link">Write to me</a>
-          <a href="#" class="about-link">Archive</a>
-          <a href="#" class="about-link">Notes &amp; Essays</a>
+          <!-- restore when pages exist --><a href="#" class="about-link" hidden>Archive</a>
+          <!-- restore when pages exist --><a href="#" class="about-link" hidden>Notes &amp; Essays</a>
         </div>
       </div>
 
@@ -335,7 +330,7 @@
         <h3 class="colophon-heading">Publication</h3>
         <p class="colophon-body">
           <em>sur lyng-a</em> is a digital chapbook published in continuous edition. Poems are added as written. All
-          work &copy; [joa], all years. No part of this publication may be reproduced without the author's written
+          work &copy; joa, all years. No part of this publication may be reproduced without the author's written
           permission. Except for quotation in critical articles, reviews, and lonesome marginal notes.
         </p>
       </div>
@@ -344,11 +339,11 @@
       <div>
         <h3 class="colophon-heading">Find Me</h3>
         <p class="colophon-body">
-          Correspondence by <a href="mailto:joa@example.com">electronic mail</a> is welcomed. I respond slowly and
-          thoughtfully, which I believe is the correct pace for letters.
+          Write to me by <a href="mailto:gjdkhar@gmail.com">electronic mail</a>. I respond slowly and thoughtfully, which I believe is the correct pace for letters.
           <br /><br />
-          This site has no tracking, no cookies (except your theme and bookmarks, saved locally), and no interest in
-          your data. Only your attention, and only if you'd like to give it.
+          You can also find my work at <a href="https://joa111.github.io" target="_blank" rel="noopener">joa111.github.io</a>.
+          <br /><br />
+          This site has no tracking, no cookies (except your theme and bookmarks, saved locally), and no interest in your data. Only your attention, and only if you'd like to give it.
         </p>
       </div>
 
@@ -356,7 +351,7 @@
 
     <div class="colophon-inner colophon-bottom">
       <p class="colophon-copyright">
-        <em>sur lyng-a</em> &nbsp;·&nbsp; Poetry by [joa] &nbsp;·&nbsp; All rights reserved &nbsp;·&nbsp;
+        <em>sur lyng-a</em> &nbsp;·&nbsp; Poetry by joa &nbsp;·&nbsp; All rights reserved &nbsp;·&nbsp;
         Typeset with care, read at your own pace.
       </p>
     </div>
@@ -458,9 +453,9 @@
             aria-hidden="true">
             <polyline points="4,2 10,7 4,12" />
           </svg>
-          Wanderer's Margin Note
+          Margin Note
         </button>
-        <div class="margin-note-body" id="margin-body" role="region" aria-label="Wanderer's margin note"></div>
+        <div class="margin-note-body" id="margin-body" role="region" aria-label="Margin note"></div>
       </div>
 
     </div><!-- /reader-content -->

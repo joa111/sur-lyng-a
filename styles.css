@@ -1,6 +1,6 @@
-/* ============================================================
+﻿/* ============================================================
    sur lyng-a — Stylesheet
-   Author: [joa]
+   Author: joa
    ============================================================ */
 
 /* ── Google Fonts ── */
@@ -815,6 +815,7 @@ img { max-width: 100%; display: block; }
   color: var(--text-secondary);
   transition: all var(--transition-fast);
   white-space: nowrap;
+  position: relative; /* needed for tooltip positioning */
 }
 .filter-pill:hover {
   border-color: var(--accent-primary);
@@ -972,6 +973,16 @@ img { max-width: 100%; display: block; }
   padding-right: 0.5rem;
 }
 
+/* undated placeholder — muted Courier Prime, same catalog-metadata register */
+.meta-undated {
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
 /* ── Bookmark ribbon indicator on TOC row ── */
 .toc-row.bookmarked .toc-catalog::before {
   content: '◆';
@@ -1103,7 +1114,7 @@ img { max-width: 100%; display: block; }
   display: none;
   width: 100%;
 }
-.empty-state.visible { display: block; }
+.empty-state.visible { display: block !important; } /* overrides HTML hidden attr */
 
 .empty-state p {
   font-family: var(--font-display);
@@ -2048,6 +2059,96 @@ pre.reader-poem-body {
   }
 }
 
+
+/* ============================================================
+   14. THEME GLOSS TOOLTIPS
+   ============================================================ */
+
+/* filter-pill already has position:relative added in section 5 */
+
+.theme-tooltip {
+  /* Position: above trigger by default */
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+
+  /* Aesthetic: margin-note, not UI popover */
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);  /* very soft only */
+
+  /* Typography: EB Garamond italic */
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+  max-width: 220px;
+  min-width: 80px;
+  padding: 0.4rem 0.65rem;
+  white-space: normal;
+  text-align: left;
+  word-break: break-word;
+
+  /* Hidden by default — fade in/out */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 130ms ease;
+}
+
+/* Arrow — points down toward the chip */
+.theme-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--border-hairline);
+}
+
+/* Show: hover, focus-within, or touch-toggle class */
+.filter-pill:hover .theme-tooltip,
+.filter-pill:focus-within .theme-tooltip,
+.filter-pill.tooltip-open .theme-tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Flip below when near top of viewport (.tooltip-flip set by JS) */
+.filter-pill.tooltip-flip .theme-tooltip {
+  bottom: auto;
+  top: calc(100% + 7px);
+}
+.filter-pill.tooltip-flip .theme-tooltip::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--border-hairline);
+}
+
+/* Clamp at very narrow viewports (360px) */
+@media (max-width: 400px) {
+  .theme-tooltip {
+    left: 0;
+    transform: none;
+    max-width: min(220px, 78vw);
+  }
+  .theme-tooltip::after {
+    left: 24px;
+    transform: none;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .theme-tooltip {
+    transition: none;
+  }
+}
 /* ============================================================
    13. ANIMATIONS & TRANSITIONS
    ============================================================ */

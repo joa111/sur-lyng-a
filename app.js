@@ -1,7 +1,7 @@
-/**
+﻿/**
  * ============================================================
  *  sur lyng-a — Application Logic
- *  Author: [joa]
+ *  Author: joa
  * ============================================================
  */
 
@@ -195,12 +195,16 @@ function updateBookmarkVisuals() {
    ============================================================ */
 function renderFeaturedPoem() {
   const poem = POEMS.find(p => p.featured) || POEMS[0];
-  if (!poem || !dom.heroFeaturedWrap) return;
+  if (!dom.heroFeaturedWrap) return;
+  if (!poem) {
+    dom.heroFeaturedWrap.innerHTML = '<p class="featured-loading-msg" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-secondary);">The poems didn\'t load. Try refreshing.</p>';
+    return;
+  }
 
   const previewLines = poem.body.split('\n').filter(l => l.trim()).slice(0, 3).join('\n');
 
   dom.heroFeaturedWrap.innerHTML = `
-    <div class="featured-label">Favour Poem of the Month</div>
+    <div class="featured-label">Featured Poem</div>
     <div class="featured-catalog">${poem.catalogNumber}</div>
     <h2 class="featured-title">${escapeHtml(poem.title)}</h2>
     <div class="featured-preview">${escapeHtml(previewLines)}…</div>
@@ -299,7 +303,7 @@ function renderTOC(poems) {
         </span>
       </div>
       <span class="toc-tag">${poem.theme}</span>
-      <div class="toc-date">${poem.date}</div>
+      <div class="toc-date">${poem.when ? escapeHtml(poem.when) : '<span class="meta-undated">undated</span>'}</div>
     </div>
   `).join('');
 
@@ -352,7 +356,7 @@ function renderGrid(poems) {
         <div class="card-preview">${escapeHtml(previewLines)}…</div>
         <div class="card-footer">
           <span class="card-tag">${poem.theme}</span>
-          <span class="card-date">${poem.date}</span>
+          <span class="card-date">${poem.when ? escapeHtml(poem.when) : '<span class="meta-undated">undated</span>'}</span>
         </div>
       </article>
     `;
@@ -383,7 +387,13 @@ function renderPoems() {
   renderGrid(poems);
 
   const isEmpty = poems.length === 0;
-  dom.emptyState?.classList.toggle('visible', isEmpty);
+  if (isEmpty) {
+    dom.emptyState?.removeAttribute('hidden');
+    dom.emptyState?.classList.add('visible');
+  } else {
+    dom.emptyState?.classList.remove('visible');
+    // keep hidden unless showing results
+  }
 }
 
 /* ============================================================
@@ -400,7 +410,7 @@ function openPoem(id) {
 
   // Meta
   dom.readerMeta.innerHTML = `
-    <span>${poem.date}</span>
+    <span>${poem.when ? escapeHtml(poem.when) : '<span class="meta-undated">undated</span>'}</span>
     <span>${poem.theme}</span>
     ${poem.readingTime ? `<span>${poem.readingTime} read</span>` : ''}
   `;
@@ -574,7 +584,7 @@ function sharePoem() {
   const url = `${window.location.origin}${window.location.pathname}#poem-${state.currentPoem.id}`;
   const shareData = {
     title: `${state.currentPoem.title} — sur lyng-a`,
-    text: `"${state.currentPoem.title}" — poetry by [joa]`,
+    text: `"${state.currentPoem.title}" — poetry by joa`,
     url: url
   };
 
@@ -720,6 +730,8 @@ function wireEvents() {
   // Keyboard escape
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
+      // Close any open touch tooltips
+      ('.filter-pill.tooltip-open').forEach(p => p.classList.remove('tooltip-open'));
       if (dom.paletteMenu && dom.paletteMenu.classList.contains('open')) {
         dom.paletteBtn?.setAttribute('aria-expanded', 'false');
         dom.paletteMenu.classList.remove('open');
@@ -788,10 +800,74 @@ function wireEvents() {
   }
 }
 
+
+/* ============================================================
+   THEME GLOSS TOOLTIPS (Item 8)
+   ============================================================ */
+function renderFilterPillsWithGloss() {
+  if (typeof THEME_GLOSS === 'undefined') return;
+
+  // Close all open tooltips
+  function closeAllTooltips() {
+    $$('.filter-pill.tooltip-open').forEach(p => p.classList.remove('tooltip-open'));
+  }
+
+  // Flip tooltip below if it would overflow top of viewport
+  function maybeFlip(pill) {
+    const tt = pill.querySelector('.theme-tooltip');
+    if (!tt) return;
+    const rect = tt.getBoundingClientRect();
+    pill.classList.toggle('tooltip-flip', rect.top < 0);
+  }
+
+  $$('.filter-pill').forEach(pill => {
+    const filterKey = (pill.dataset.filter || '').trim();
+    const gloss = THEME_GLOSS[filterKey];
+    if (!gloss) return; // empty string => no tooltip
+
+    // Create tooltip element
+    const tooltipId = 'tooltip-' + filterKey.replace(/\s+/g, '-').replace(/[^a-z0-9-]/gi, '');
+    const tt = document.createElement('div');
+    tt.className = 'theme-tooltip';
+    tt.setAttribute('role', 'tooltip');
+    tt.id = tooltipId;
+    tt.textContent = gloss;
+    pill.appendChild(tt);
+    pill.setAttribute('aria-describedby', tooltipId);
+
+    // Desktop: hover
+    pill.addEventListener('mouseenter', () => { maybeFlip(pill); });
+    pill.addEventListener('mouseleave', () => { pill.classList.remove('tooltip-flip'); });
+
+    // Desktop: keyboard focus
+    pill.addEventListener('focus', () => { maybeFlip(pill); });
+    pill.addEventListener('blur', () => { pill.classList.remove('tooltip-flip'); });
+
+    // Touch: tap toggles
+    pill.addEventListener('click', (e) => {
+      const wasOpen = pill.classList.contains('tooltip-open');
+      closeAllTooltips();
+      if (!wasOpen) {
+        pill.classList.add('tooltip-open');
+        maybeFlip(pill);
+      }
+      e.stopPropagation();
+    });
+  });
+
+  // Clicking elsewhere closes touch tooltips
+  document.addEventListener('click', closeAllTooltips);
+}
 /* ============================================================
    INIT
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
+  // Guard: if poems.js failed to load or POEMS is empty, show error and bail
+  if (typeof POEMS === 'undefined' || !POEMS.length) {
+    const wrap = document.getElementById('hero-featured-wrap');
+    if (wrap) wrap.innerHTML = '<p class="featured-loading-msg" style="font-family:var(--font-mono);font-size:0.7rem;color:var(--text-secondary);">The poems didn\'t load. Try refreshing.</p>';
+    return;
+  }
   initPalette();
   initTheme();
   loadBookmarks();
@@ -800,6 +876,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderPoems();
   renderBookmarkDrawer();
   wireEvents();
+  renderFilterPillsWithGloss();
 
   // Set initial view
   dom.tocView.classList.add('active');
