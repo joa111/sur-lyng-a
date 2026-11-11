@@ -1685,56 +1685,87 @@ pre.reader-poem-body {
 @media (max-width: 640px) {
   html { font-size: 16px; }
 
+  /* ── Option A: Structured Two-Row Mobile Header ── */
   .pub-topbar-inner {
-    padding: max(0.45rem, env(safe-area-inset-top, 0.45rem)) var(--spacing-md) 0.45rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: space-between;
+    padding: max(0.5rem, env(safe-area-inset-top, 0.5rem)) var(--spacing-md) 0.55rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.45rem;
   }
 
+  /* Row 1: Edition & volume label, centered & neat */
   .pub-volume-label {
-    font-size: 0.62rem;
-    white-space: normal;
-    line-height: 1.35;
-    letter-spacing: 0.08em;
+    font-size: 0.6rem;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1.25;
+    letter-spacing: 0.1em;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--border-hairline);
+    opacity: 0.85;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  /* Compact topbar title on narrower phones to prevent wrapping clutter */
-  @media (max-width: 400px) {
-    .pub-vol-desc,
-    .pub-vol-dot:nth-of-type(1) {
-      display: none;
-    }
-  }
-
+  /* Row 2: Evenly arranged 3 action controls */
   .pub-topbar-controls {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr;
+    align-items: center;
     gap: 0.4rem;
+    width: 100%;
+  }
+
+  .palette-dropdown {
+    width: 100%;
   }
 
   .btn-icon,
   .palette-btn {
+    width: 100%;
     min-height: 38px;
-    padding: 0.4rem 0.55rem;
+    padding: 0.35rem 0.45rem;
     font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    justify-content: center;
     touch-action: manipulation;
+    white-space: nowrap;
   }
 
-  @media (max-width: 520px) {
-    .palette-menu {
-      right: -40px;
-      width: 240px;
-    }
+  /* Retain wording in mobile! */
+  .pub-topbar-controls .theme-label,
+  .palette-current-label,
+  #bookmark-drawer-btn > span {
+    display: inline !important;
   }
 
-  @media (max-width: 440px) {
-    .palette-btn-text,
-    .pub-topbar-controls .theme-label,
-    #bookmark-drawer-btn > span:not(#bookmark-count) {
+  /* Make Palette button concise so all text fits cleanly without cramping */
+  .palette-btn-text {
+    display: none !important; /* Hide redundant "Palette:" prefix, keep pip + label e.g. "● Pine ▾" */
+  }
+
+  /* Palette dropdown menu — anchored safely within viewport on mobile */
+  .palette-menu {
+    left: 0;
+    right: auto;
+    width: min(270px, calc(100vw - 2rem));
+    max-width: calc(100vw - 2rem);
+    box-sizing: border-box;
+  }
+
+  /* For very narrow phones (< 360px), keep edition label clean */
+  @media (max-width: 360px) {
+    .pub-vol-desc,
+    .pub-vol-dot:nth-of-type(1) {
       display: none;
     }
-    .palette-menu {
-      right: -80px;
-      width: 230px;
+    .btn-icon,
+    .palette-btn {
+      padding: 0.3rem 0.35rem;
+      font-size: 0.58rem;
     }
   }
 
@@ -2064,7 +2095,12 @@ pre.reader-poem-body {
    14. THEME GLOSS TOOLTIPS
    ============================================================ */
 
-/* filter-pill already has position:relative added in section 5 */
+/* Tooltip anchors: chips & tags */
+.filter-pill,
+.toc-tag,
+.card-tag {
+  position: relative;
+}
 
 .theme-tooltip {
   /* Position: above trigger by default */
@@ -2072,34 +2108,39 @@ pre.reader-poem-body {
   bottom: calc(100% + 7px);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 200;
+  z-index: 9999;
 
   /* Aesthetic: margin-note, not UI popover */
   background: var(--bg-elevated);
   border: 1px solid var(--border-hairline);
   border-radius: var(--radius-sm);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);  /* very soft only */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 
-  /* Typography: EB Garamond italic */
+  /* Typography: EB Garamond italic, reset inherited uppercase/mono */
   font-family: var(--font-body);
   font-style: italic;
-  font-size: 0.875rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--text-primary);
-  max-width: 220px;
-  min-width: 80px;
-  padding: 0.4rem 0.65rem;
-  white-space: normal;
-  text-align: left;
-  word-break: break-word;
+
+  /* Dimensions & wrapping: keep on one line if short, prevent cut letters */
+  white-space: nowrap;
+  max-width: 260px;
+  width: max-content;
+  padding: 0.35rem 0.65rem;
+  text-align: center;
+  pointer-events: none;
 
   /* Hidden by default — fade in/out */
   opacity: 0;
-  pointer-events: none;
-  transition: opacity 130ms ease;
+  visibility: hidden;
+  transition: opacity 130ms ease, visibility 130ms ease;
 }
 
-/* Arrow — points down toward the chip */
+/* Arrow — points down toward the trigger */
 .theme-tooltip::after {
   content: '';
   position: absolute;
@@ -2110,36 +2151,52 @@ pre.reader-poem-body {
   border-top-color: var(--border-hairline);
 }
 
-/* Show: hover, focus-within, or touch-toggle class */
+/* Show: hover, keyboard focus-within, or touch/click toggle class */
 .filter-pill:hover .theme-tooltip,
 .filter-pill:focus-within .theme-tooltip,
-.filter-pill.tooltip-open .theme-tooltip {
+.filter-pill.tooltip-open .theme-tooltip,
+.toc-tag:hover .theme-tooltip,
+.toc-tag:focus-within .theme-tooltip,
+.toc-tag.tooltip-open .theme-tooltip,
+.card-tag:hover .theme-tooltip,
+.card-tag:focus-within .theme-tooltip,
+.card-tag.tooltip-open .theme-tooltip {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
 }
 
 /* Flip below when near top of viewport (.tooltip-flip set by JS) */
-.filter-pill.tooltip-flip .theme-tooltip {
+.filter-pill.tooltip-flip .theme-tooltip,
+.toc-tag.tooltip-flip .theme-tooltip,
+.card-tag.tooltip-flip .theme-tooltip {
   bottom: auto;
   top: calc(100% + 7px);
 }
-.filter-pill.tooltip-flip .theme-tooltip::after {
+.filter-pill.tooltip-flip .theme-tooltip::after,
+.toc-tag.tooltip-flip .theme-tooltip::after,
+.card-tag.tooltip-flip .theme-tooltip::after {
   top: auto;
   bottom: 100%;
   border-top-color: transparent;
   border-bottom-color: var(--border-hairline);
 }
 
-/* Clamp at very narrow viewports (360px) */
+/* Prevent mobile horizontal scroll carousel from clipping tooltips */
+@media (max-width: 640px) {
+  .filter-pills {
+    overflow-x: auto;
+    overflow-y: visible !important;
+    padding-top: 1.8rem !important; /* reserve room above chips for tooltips */
+    margin-top: -1.6rem;
+  }
+}
+
+/* Clamp at very narrow viewports (<= 400px) */
 @media (max-width: 400px) {
   .theme-tooltip {
-    left: 0;
-    transform: none;
-    max-width: min(220px, 78vw);
-  }
-  .theme-tooltip::after {
-    left: 24px;
-    transform: none;
+    max-width: min(240px, 85vw);
+    white-space: normal; /* wrap gracefully only on extremely tight screens */
   }
 }
 

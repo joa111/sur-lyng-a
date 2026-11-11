@@ -385,6 +385,7 @@ function renderPoems() {
   const poems = getFilteredPoems();
   renderTOC(poems);
   renderGrid(poems);
+  renderFilterPillsWithGloss();
 
   const isEmpty = poems.length === 0;
   if (isEmpty) {
@@ -731,7 +732,7 @@ function wireEvents() {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       // Close any open touch tooltips
-      ('.filter-pill.tooltip-open').forEach(p => p.classList.remove('tooltip-open'));
+      $$('.filter-pill.tooltip-open, .toc-tag.tooltip-open, .card-tag.tooltip-open').forEach(p => p.classList.remove('tooltip-open'));
       if (dom.paletteMenu && dom.paletteMenu.classList.contains('open')) {
         dom.paletteBtn?.setAttribute('aria-expanded', 'false');
         dom.paletteMenu.classList.remove('open');
@@ -807,56 +808,79 @@ function wireEvents() {
 function renderFilterPillsWithGloss() {
   if (typeof THEME_GLOSS === 'undefined') return;
 
-  // Close all open tooltips
   function closeAllTooltips() {
-    $$('.filter-pill.tooltip-open').forEach(p => p.classList.remove('tooltip-open'));
+    $$('.filter-pill.tooltip-open, .toc-tag.tooltip-open, .card-tag.tooltip-open').forEach(p => p.classList.remove('tooltip-open'));
   }
 
-  // Flip tooltip below if it would overflow top of viewport
-  function maybeFlip(pill) {
-    const tt = pill.querySelector('.theme-tooltip');
+  function maybeFlip(trigger) {
+    const tt = trigger.querySelector('.theme-tooltip');
     if (!tt) return;
     const rect = tt.getBoundingClientRect();
-    pill.classList.toggle('tooltip-flip', rect.top < 0);
+    trigger.classList.toggle('tooltip-flip', rect.top < 0);
   }
 
-  $$('.filter-pill').forEach(pill => {
-    const filterKey = (pill.dataset.filter || '').trim();
+  function attachGloss(el, filterKey) {
     const gloss = THEME_GLOSS[filterKey];
-    if (!gloss) return; // empty string => no tooltip
+    if (!gloss) return;
 
-    // Create tooltip element
     const tooltipId = 'tooltip-' + filterKey.replace(/\s+/g, '-').replace(/[^a-z0-9-]/gi, '');
-    const tt = document.createElement('div');
-    tt.className = 'theme-tooltip';
-    tt.setAttribute('role', 'tooltip');
-    tt.id = tooltipId;
-    tt.textContent = gloss;
-    pill.appendChild(tt);
-    pill.setAttribute('aria-describedby', tooltipId);
+    let tt = el.querySelector('.theme-tooltip');
+    if (!tt) {
+      tt = document.createElement('div');
+      tt.className = 'theme-tooltip';
+      tt.setAttribute('role', 'tooltip');
+      tt.id = tooltipId;
+      tt.textContent = gloss;
+      el.appendChild(tt);
+    } else {
+      tt.textContent = gloss;
+    }
+    el.setAttribute('aria-describedby', tooltipId);
+    if (!el.hasAttribute('tabindex')) {
+      el.setAttribute('tabindex', '0');
+    }
 
-    // Desktop: hover
-    pill.addEventListener('mouseenter', () => { maybeFlip(pill); });
-    pill.addEventListener('mouseleave', () => { pill.classList.remove('tooltip-flip'); });
+    el.addEventListener('mouseenter', () => { maybeFlip(el); });
+    el.addEventListener('mouseleave', () => { el.classList.remove('tooltip-flip'); });
 
-    // Desktop: keyboard focus
-    pill.addEventListener('focus', () => { maybeFlip(pill); });
-    pill.addEventListener('blur', () => { pill.classList.remove('tooltip-flip'); });
+    el.addEventListener('focus', () => { maybeFlip(el); });
+    el.addEventListener('blur', () => { el.classList.remove('tooltip-flip'); });
 
-    // Touch: tap toggles
-    pill.addEventListener('click', (e) => {
-      const wasOpen = pill.classList.contains('tooltip-open');
+    el.addEventListener('click', (e) => {
+      // On mobile / touch devices or when clicked, toggle tooltip
+      const wasOpen = el.classList.contains('tooltip-open');
       closeAllTooltips();
       if (!wasOpen) {
-        pill.classList.add('tooltip-open');
-        maybeFlip(pill);
+        el.classList.add('tooltip-open');
+        maybeFlip(el);
       }
       e.stopPropagation();
     });
+  }
+
+  // Attach to filter pills in the anthology header
+  $$('.filter-pill').forEach(pill => {
+    const filterKey = (pill.dataset.filter || '').trim();
+    attachGloss(pill, filterKey);
   });
 
-  // Clicking elsewhere closes touch tooltips
-  document.addEventListener('click', closeAllTooltips);
+  // Attach to TOC rows theme tags
+  $$('.toc-tag', dom.tocBody).forEach(tag => {
+    const filterKey = (tag.textContent || '').trim();
+    attachGloss(tag, filterKey);
+  });
+
+  // Attach to Card grid theme tags
+  $$('.card-tag', dom.gridBody).forEach(tag => {
+    const filterKey = (tag.textContent || '').trim();
+    attachGloss(tag, filterKey);
+  });
+
+  // Global click outside to dismiss tooltips
+  if (!window._glossClickWired) {
+    document.addEventListener('click', closeAllTooltips);
+    window._glossClickWired = true;
+  }
 }
 /* ============================================================
    INIT
