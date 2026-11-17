@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ============================================================
  *  sur lyng-a — Application Logic
  *  Author: joa
@@ -59,6 +59,13 @@ const dom = {
   bookmarkEmpty: $('#bookmark-empty'),
   heroFeaturedWrap: $('#hero-featured-wrap'),
   toast: $('#toast'),
+  siteLoader: $('#site-loader'),
+  siteLoaderQuote: $('#site-loader-quote'),
+  siteLoaderStatus: $('#site-loader-status'),
+  readerLoader: $('#reader-loader'),
+  readerLoaderCaption: $('#reader-loader-caption'),
+  connectionBanner: $('#connection-banner'),
+  connectionBannerText: $('#connection-banner-text'),
 };
 
 /* ============================================================
@@ -66,10 +73,10 @@ const dom = {
    ============================================================ */
 const PALETTES = {
   terracotta: { name: 'Aged Parchment', short: 'Parchment', desc: 'Terracotta & Forest' },
-  pine:       { name: 'Pine & Amber', short: 'Pine', desc: 'Highland Mist & Rum' },
-  navy:       { name: 'Midnight Navy', short: 'Navy', desc: 'Inkwell & Antique Brass' },
-  espresso:   { name: 'Smoked Espresso', short: 'Espresso', desc: 'Tobacco Ash & Whiskey' },
-  burgundy:   { name: 'Vintage Burgundy', short: 'Burgundy', desc: 'Wine Stain & Pressed Rose' },
+  pine: { name: 'Pine & Amber', short: 'Pine', desc: 'Highland Mist & Rum' },
+  navy: { name: 'Midnight Navy', short: 'Navy', desc: 'Inkwell & Antique Brass' },
+  espresso: { name: 'Smoked Espresso', short: 'Espresso', desc: 'Tobacco Ash & Whiskey' },
+  burgundy: { name: 'Vintage Burgundy', short: 'Burgundy', desc: 'Wine Stain & Pressed Rose' },
 };
 
 function initPalette() {
@@ -398,98 +405,276 @@ function renderPoems() {
 }
 
 /* ============================================================
-   POEM READER
+   RETRO LITERATURE LOADER & NETWORK MONITOR
    ============================================================ */
-function openPoem(id) {
-  const poem = POEMS.find(p => p.id === id);
-  if (!poem) return;
-  state.currentPoem = poem;
+const LOADER_QUOTES = [
+  '"To all my yearnings and tendencies, here I go…"',
+  '"Rum is the real creative director: without it I stare at a blank screen…"',
+  '"Typesetting the verses in lead and antimony…"',
+  '"Cold balconies, cigarettes burning down to ash…"',
+  '"Typeset with care, read at your own pace…"',
+  '"No part of this publication may be reproduced without written permission…"',
+  '"Questions that only show up when nobody\'s looking…"',
+];
 
-  // Populate content
-  dom.readerCatalog.textContent = poem.catalogNumber;
-  dom.readerTitle.textContent = poem.title;
+const LOADER_STATUSES = [
+  'Dipping the quill in midnight ink…',
+  'Binding the folios by candlelight…',
+  'Typesetting the verses onto parchment…',
+  'Pouring another measure into the cup…',
+  'Waiting for the ink to dry on cold paper…',
+];
 
-  // Meta
-  dom.readerMeta.innerHTML = `
-    <span>${poem.when ? escapeHtml(poem.when) : '<span class="meta-undated">undated</span>'}</span>
-    <span>${poem.theme}</span>
-    ${poem.readingTime ? `<span>${poem.readingTime} read</span>` : ''}
+let loaderQuoteInterval = null;
+const loaderStartTime = Date.now();
+
+function initSiteLoader() {
+  if (!dom.siteLoader) return;
+
+  let quoteIdx = 0;
+  let statusIdx = 0;
+
+  loaderQuoteInterval = setInterval(() => {
+    quoteIdx = (quoteIdx + 1) % LOADER_QUOTES.length;
+    statusIdx = (statusIdx + 1) % LOADER_STATUSES.length;
+
+    if (dom.siteLoaderQuote) {
+      dom.siteLoaderQuote.style.opacity = '0';
+      setTimeout(() => {
+        dom.siteLoaderQuote.textContent = LOADER_QUOTES[quoteIdx];
+        dom.siteLoaderQuote.style.opacity = '1';
+      }, 250);
+    }
+    if (dom.siteLoaderStatus) {
+      dom.siteLoaderStatus.style.opacity = '0';
+      setTimeout(() => {
+        dom.siteLoaderStatus.textContent = LOADER_STATUSES[statusIdx];
+        dom.siteLoaderStatus.style.opacity = '1';
+      }, 250);
+    }
+  }, 2200);
+
+  const dismissLoader = () => {
+    const elapsed = Date.now() - loaderStartTime;
+    const minDisplay = 700; // Pacing duration to admire the aesthetic
+    const delay = Math.max(0, minDisplay - elapsed);
+
+    setTimeout(() => {
+      dom.siteLoader?.classList.add('site-loader-fade-out');
+      clearInterval(loaderQuoteInterval);
+      setTimeout(() => {
+        dom.siteLoader?.classList.add('site-loader-hidden');
+      }, 650);
+    }, delay);
+  };
+
+  if (document.readyState === 'complete') {
+    dismissLoader();
+  } else {
+    window.addEventListener('load', dismissLoader, { once: true });
+    // Safety fallback in case external resources stall
+    setTimeout(dismissLoader, 3500);
+  }
+}
+
+function isSlowConnection() {
+  if (!navigator.onLine) return true;
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn) {
+    if (conn.saveData) return true;
+    if (conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g') return true;
+  }
+  return false;
+}
+
+function updateNetworkBanner() {
+  if (!dom.connectionBanner) return;
+  if (!navigator.onLine) {
+    dom.connectionBanner.classList.add('visible');
+    if (dom.connectionBannerText) {
+      dom.connectionBannerText.textContent = 'Notice: Disconnected from network · Reading from local chapbook cache';
+    }
+  } else if (isSlowConnection()) {
+    dom.connectionBanner.classList.add('visible');
+    if (dom.connectionBannerText) {
+      dom.connectionBannerText.textContent = 'Notice: Slow ink transmission detected · Verses loading from local cache';
+    }
+  } else {
+    dom.connectionBanner.classList.remove('visible');
+  }
+}
+
+/* ============================================================
+   POEM READER & 404 STATE
+   ============================================================ */
+function show404Poem(id) {
+  state.currentPoem = null;
+  dom.readerCatalog.textContent = 'Folio Missing';
+  dom.readerTitle.textContent = 'Page Torn from the Chapbook';
+  dom.readerMeta.innerHTML = '<span>Error 404</span><span>Uncatalogued Leaf</span>';
+
+  dom.readerEpigraph.style.display = '';
+  dom.readerRule.style.display = '';
+  dom.readerEpigraph.innerHTML = `
+    <p class="reader-epigraph-text">"Some poems refuse to be printed."</p>
+    <cite class="reader-epigraph-attr">— The Typesetter's Apology</cite>
   `;
 
-  // Epigraph
-  if (poem.epigraph) {
-    dom.readerEpigraph.innerHTML = `
-      <p class="reader-epigraph-text">"${escapeHtml(poem.epigraph.text)}"</p>
-      <span class="reader-epigraph-attr">${poem.epigraph.attribution}</span>
-    `;
-    dom.readerEpigraph.style.display = '';
-    dom.readerRule.style.display = '';
-  } else {
-    dom.readerEpigraph.style.display = 'none';
-    dom.readerRule.style.display = 'none';
+  dom.readerBody.textContent = `The verse you requested (Folio No. ${escapeHtml(String(id || '???'))}) was not found in this printing.\n\nPerhaps the ink spilled here, or the page was taken by the cold wind before the scribe could bind it.\n\nPlease turn back to the table of contents to choose from the existing verses.`;
+
+  dom.readerMarginNote.style.display = 'none';
+
+  if (dom.readerNavPrev) dom.readerNavPrev.style.visibility = 'hidden';
+  if (dom.readerNavNext) dom.readerNavNext.style.visibility = 'hidden';
+  if (dom.readerBookmarkBtn) dom.readerBookmarkBtn.style.visibility = 'hidden';
+  if (dom.readerShareBtn) dom.readerShareBtn.style.visibility = 'hidden';
+
+  // Add return button if not already present
+  let notice = dom.readerOverlay.querySelector('.reader-404-notice');
+  if (!notice) {
+    notice = document.createElement('div');
+    notice.className = 'reader-404-notice';
+    notice.innerHTML = `<button class="btn-retro primary reader-404-btn" type="button">← Return to Anthology</button>`;
+    notice.querySelector('button').addEventListener('click', closePoem);
+    dom.readerBody.parentNode.insertBefore(notice, dom.readerBody.nextSibling);
   }
 
-  // Body
-  dom.readerBody.textContent = poem.body;
-
-  // Margin note
-  if (poem.marginNote) {
-    dom.readerMarginNote.style.display = '';
-    dom.marginBody.textContent = poem.marginNote;
-    dom.marginBody.classList.remove('open');
-    dom.marginToggle.classList.remove('open');
-  } else {
-    dom.readerMarginNote.style.display = 'none';
+  if (dom.readerLoader) {
+    dom.readerLoader.classList.remove('active');
   }
 
-  // Bookmark state
-  updateBookmarkVisuals();
+  dom.readerOverlay.classList.add('open');
+  dom.readerOverlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
 
-  // Prev / Next nav
-  const allPoems = POEMS;
-  const idx = allPoems.findIndex(p => p.id === id);
-  const prev = allPoems[idx - 1];
-  const next = allPoems[idx + 1];
-
-  if (dom.readerNavPrev) {
-    if (prev) {
-      dom.readerNavPrev.innerHTML = `
-        <span class="reader-nav-label">← Previous</span>
-        <span class="reader-nav-title">${prev.title}</span>
-      `;
-      dom.readerNavPrev.dataset.poemId = prev.id;
-      dom.readerNavPrev.style.visibility = '';
-    } else {
-      dom.readerNavPrev.style.visibility = 'hidden';
-    }
+function openPoem(id) {
+  const poem = POEMS.find(p => p.id === id);
+  if (!poem) {
+    show404Poem(id);
+    return;
   }
+  state.currentPoem = poem;
 
-  if (dom.readerNavNext) {
-    if (next) {
-      dom.readerNavNext.innerHTML = `
-        <span class="reader-nav-label">Next →</span>
-        <span class="reader-nav-title">${next.title}</span>
-      `;
-      dom.readerNavNext.dataset.poemId = next.id;
-      dom.readerNavNext.style.visibility = '';
-    } else {
-      dom.readerNavNext.style.visibility = 'hidden';
-    }
-  }
+  // Restore any hidden controls from 404 state
+  if (dom.readerBookmarkBtn) dom.readerBookmarkBtn.style.visibility = '';
+  if (dom.readerShareBtn) dom.readerShareBtn.style.visibility = '';
+  const oldNotice = dom.readerOverlay.querySelector('.reader-404-notice');
+  if (oldNotice) oldNotice.remove();
 
   // Open overlay
   dom.readerOverlay.classList.add('open');
   dom.readerOverlay.scrollTop = 0;
   document.body.style.overflow = 'hidden';
 
-  // URL hash for shareable links
-  history.pushState({ poemId: id }, '', `#poem-${id}`);
+  // Check connection state
+  const slow = isSlowConnection();
+  const loaderDelay = slow ? 700 : 180;
+
+  if (dom.readerLoader) {
+    if (dom.readerLoaderCaption) {
+      if (!navigator.onLine) {
+        dom.readerLoaderCaption.textContent = 'Unfolding verse from offline reserve…';
+      } else if (slow) {
+        dom.readerLoaderCaption.textContent = 'Retrieving folio over slow wire…';
+      } else {
+        dom.readerLoaderCaption.textContent = 'Inking verses onto parchment…';
+      }
+    }
+    dom.readerLoader.classList.add('active');
+  }
+
+  setTimeout(() => {
+    // Populate content
+    dom.readerCatalog.textContent = poem.catalogNumber;
+    dom.readerTitle.textContent = poem.title;
+
+    // Meta
+    dom.readerMeta.innerHTML = `
+      <span>${poem.when ? escapeHtml(poem.when) : '<span class="meta-undated">undated</span>'}</span>
+      <span>${poem.theme}</span>
+      ${poem.readingTime ? `<span>${poem.readingTime} read</span>` : ''}
+    `;
+
+    // Epigraph
+    if (poem.epigraph) {
+      dom.readerEpigraph.innerHTML = `
+        <p class="reader-epigraph-text">"${escapeHtml(poem.epigraph.text)}"</p>
+        <span class="reader-epigraph-attr">${poem.epigraph.attribution}</span>
+      `;
+      dom.readerEpigraph.style.display = '';
+      dom.readerRule.style.display = '';
+    } else {
+      dom.readerEpigraph.style.display = 'none';
+      dom.readerRule.style.display = 'none';
+    }
+
+    // Body
+    dom.readerBody.textContent = poem.body;
+
+    // Margin note
+    if (poem.marginNote) {
+      dom.readerMarginNote.style.display = '';
+      dom.marginBody.textContent = poem.marginNote;
+      dom.marginBody.classList.remove('open');
+      dom.marginToggle.classList.remove('open');
+    } else {
+      dom.readerMarginNote.style.display = 'none';
+    }
+
+    // Bookmark state
+    updateBookmarkVisuals();
+
+    // Prev / Next nav
+    const allPoems = POEMS;
+    const idx = allPoems.findIndex(p => p.id === id);
+    const prev = allPoems[idx - 1];
+    const next = allPoems[idx + 1];
+
+    if (dom.readerNavPrev) {
+      if (prev) {
+        dom.readerNavPrev.innerHTML = `
+          <span class="reader-nav-label">← Previous</span>
+          <span class="reader-nav-title">${prev.title}</span>
+        `;
+        dom.readerNavPrev.dataset.poemId = prev.id;
+        dom.readerNavPrev.style.visibility = '';
+      } else {
+        dom.readerNavPrev.style.visibility = 'hidden';
+      }
+    }
+
+    if (dom.readerNavNext) {
+      if (next) {
+        dom.readerNavNext.innerHTML = `
+          <span class="reader-nav-label">Next →</span>
+          <span class="reader-nav-title">${next.title}</span>
+        `;
+        dom.readerNavNext.dataset.poemId = next.id;
+        dom.readerNavNext.style.visibility = '';
+      } else {
+        dom.readerNavNext.style.visibility = 'hidden';
+      }
+    }
+
+    // Hide reader loader
+    if (dom.readerLoader) {
+      dom.readerLoader.classList.remove('active');
+    }
+
+    // URL hash for shareable links
+    history.pushState({ poemId: id }, '', `#poem-${id}`);
+  }, loaderDelay);
 }
 
 function closePoem() {
   dom.readerOverlay.classList.remove('open');
   document.body.style.overflow = '';
   state.currentPoem = null;
+  if (dom.readerBookmarkBtn) dom.readerBookmarkBtn.style.visibility = '';
+  if (dom.readerShareBtn) dom.readerShareBtn.style.visibility = '';
+  const notice = dom.readerOverlay.querySelector('.reader-404-notice');
+  if (notice) notice.remove();
   // Restore URL
   history.pushState({}, '', window.location.pathname);
 }
@@ -790,13 +975,17 @@ function wireEvents() {
     }
   }, { passive: true });
 
-  // Check URL hash on load (shareable link support)
+  // Check URL hash on load (shareable link & random poem support)
   const hash = window.location.hash;
-  if (hash && hash.startsWith('#poem-')) {
-    const id = parseInt(hash.replace('#poem-', ''), 10);
-    if (!isNaN(id)) {
-      // Slight delay to let DOM settle
-      setTimeout(() => openPoem(id), 100);
+  if (hash) {
+    if (hash === '#poem-random') {
+      const randPoem = POEMS[Math.floor(Math.random() * POEMS.length)];
+      if (randPoem) setTimeout(() => openPoem(randPoem.id), 120);
+    } else if (hash.startsWith('#poem-')) {
+      const id = parseInt(hash.replace('#poem-', ''), 10);
+      if (!isNaN(id)) {
+        setTimeout(() => openPoem(id), 120);
+      }
     }
   }
 }
@@ -886,6 +1075,9 @@ function renderFilterPillsWithGloss() {
    INIT
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Retro Literature Site Loader right away
+  initSiteLoader();
+
   // Guard: if poems.js failed to load or POEMS is empty, show error and bail
   if (typeof POEMS === 'undefined' || !POEMS.length) {
     const wrap = document.getElementById('hero-featured-wrap');
@@ -901,6 +1093,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderBookmarkDrawer();
   wireEvents();
   renderFilterPillsWithGloss();
+
+  // Low-internet & offline network listeners
+  updateNetworkBanner();
+  window.addEventListener('online', updateNetworkBanner);
+  window.addEventListener('offline', updateNetworkBanner);
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn) {
+    conn.addEventListener('change', updateNetworkBanner);
+  }
 
   // Set initial view
   dom.tocView.classList.add('active');

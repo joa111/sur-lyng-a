@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="sur lyng-a – Folio Not Found (404)" />
+  <title>Page Torn from the Chapbook — sur lyng-a</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=EB+Garamond:ital,wght@0,400;1,400&family=Courier+Prime:ital,wght@0,400;1,400&display=swap"
+    rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Immediate Theme / Palette Init to Prevent Flash -->
+  <script>
+    (function () {
+      try {
+        var p = localStorage.getItem('sur-lyng-a-palette') || 'pine';
+        var t = localStorage.getItem('sur-lyng-a-theme') || 'light';
+        document.documentElement.setAttribute('data-palette', p);
+        if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+     PUBLICATION TOPBAR
+     ═══════════════════════════════════════════════════════ -->
+  <header class="pub-topbar" role="banner">
+    <div class="pub-topbar-inner">
+      <!-- Volume / Issue label -->
+      <span class="pub-volume-label">
+        <span class="pub-vol-part">Vol. I</span>
+        <span class="pub-vol-dot" aria-hidden="true">&nbsp;·&nbsp;</span>
+        <span class="pub-vol-desc">Errata &amp; Unfound Leaves</span>
+        <span class="pub-vol-dot" aria-hidden="true">&nbsp;·&nbsp;</span>
+        <span class="pub-vol-est">Est. Iongkaluh, 2021</span>
+      </span>
+
+      <!-- Controls -->
+      <div class="pub-topbar-controls">
+        <!-- Palette Switcher -->
+        <div class="palette-dropdown" id="palette-dropdown">
+          <button class="btn-icon palette-btn" id="palette-btn" title="Choose color atmosphere"
+            aria-label="Choose color atmosphere" aria-haspopup="true" aria-expanded="false">
+            <span class="palette-pip" aria-hidden="true"></span>
+            <span class="palette-btn-text">Palette:</span>
+            <span class="palette-current-label" id="palette-current-label">Pine</span>
+            <svg class="palette-chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" />
+            </svg>
+          </button>
+
+          <div class="palette-menu" id="palette-menu" role="menu" aria-label="Choose color atmosphere" hidden>
+            <div class="palette-menu-heading">Color Atmosphere</div>
+            <button class="palette-option" data-palette="terracotta" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#F5EFE6; --prev-accent:#8C2D19; --prev-dark-bg:#161412; --prev-dark-accent:#C86D51;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Aged Parchment</span>
+                <span class="palette-sub">Terracotta &amp; Forest</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option active" data-palette="pine" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#EDF1EB; --prev-accent:#B25D1A; --prev-dark-bg:#111713; --prev-dark-accent:#E08C3C;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Pine &amp; Amber</span>
+                <span class="palette-sub">Highland Mist &amp; Rum</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option" data-palette="navy" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#EFF2F6; --prev-accent:#B3751E; --prev-dark-bg:#0E131C; --prev-dark-accent:#E2A140;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Midnight Navy</span>
+                <span class="palette-sub">Inkwell &amp; Antique Brass</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option" data-palette="espresso" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#F5F0E8; --prev-accent:#A35422; --prev-dark-bg:#15110E; --prev-dark-accent:#DA7935;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Smoked Espresso</span>
+                <span class="palette-sub">Tobacco Ash &amp; Whiskey</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+            <button class="palette-option" data-palette="burgundy" role="menuitem" type="button">
+              <span class="palette-preview" style="--prev-bg:#F7F1F3; --prev-accent:#8C2440; --prev-dark-bg:#171015; --prev-dark-accent:#D4587B;"></span>
+              <span class="palette-info">
+                <span class="palette-name">Vintage Burgundy</span>
+                <span class="palette-sub">Wine Stain &amp; Pressed Rose</span>
+              </span>
+              <span class="palette-check" aria-hidden="true">◆</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Theme toggle -->
+        <button class="btn-icon" id="theme-toggle" title="Switch to Candlelight (Dark)"
+          aria-label="Toggle reading theme">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <line x1="8" y1="1" x2="8" y2="2.5" />
+            <path d="M6 5c0-1.1 2-3 2-3s2 1.9 2 3a2 2 0 01-4 0z" />
+            <rect x="5" y="7" width="6" height="8" rx="1" />
+          </svg>
+          <span class="theme-label">Candlelight</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════
+     MASTHEAD
+     ═══════════════════════════════════════════════════════ -->
+  <div class="masthead" role="complementary" aria-label="Publication masthead">
+    <div class="masthead-inner">
+      <div class="masthead-double-rule" aria-hidden="true"></div>
+      <p class="masthead-subtitle">A Digital Chapbook &amp; Poetry-folio</p>
+      <h1 class="masthead-title"><a href="index.html" style="color:inherit; text-decoration:none;">sur lyng-a</a></h1>
+      <p class="masthead-author">by joa</p>
+      <div class="masthead-double-rule-bottom" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <hr class="section-rule" />
+
+  <!-- ═══════════════════════════════════════════════════════
+     404 ERROR SECTION
+     ═══════════════════════════════════════════════════════ -->
+  <main class="error-404-section" role="main" aria-label="Page Not Found">
+    <article class="error-404-card">
+      <div class="site-loader-corner site-loader-corner-tl" aria-hidden="true"></div>
+      <div class="site-loader-corner site-loader-corner-tr" aria-hidden="true"></div>
+      <div class="site-loader-corner site-loader-corner-bl" aria-hidden="true"></div>
+      <div class="site-loader-corner site-loader-corner-br" aria-hidden="true"></div>
+
+      <div class="error-404-tag">Folio Unfound &nbsp;·&nbsp; 404</div>
+      <div class="error-404-num" aria-hidden="true">404</div>
+      <h2 class="error-404-title">Page Torn from the Chapbook</h2>
+
+      <div class="error-404-rule" aria-hidden="true">
+        <span class="site-loader-rule-line"></span>
+        <span class="site-loader-rule-diamond">◆</span>
+        <span class="site-loader-rule-line"></span>
+      </div>
+
+      <div class="error-404-epigraph">
+        <blockquote>
+          "What is not said is often louder than what is written."
+        </blockquote>
+        <cite>— joa, <em>marginal note</em></cite>
+      </div>
+
+      <p class="error-404-text">
+        You have turned to a page that does not exist in this volume. Perhaps the ink spilled, or the scribe grew tired and reached for another peg of rum. Whatever verses once lived at this address are no longer among the printed leaves.
+      </p>
+
+      <div class="error-404-actions">
+        <a href="index.html" class="btn-retro primary">
+          <span>←</span>
+          <span>Return to the Anthology</span>
+        </a>
+        <a href="index.html#poem-random" class="btn-retro" id="btn-random-leaf">
+          <span>Read a Random Verse</span>
+          <span>→</span>
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <hr class="section-rule" />
+
+  <!-- ═══════════════════════════════════════════════════════
+     COLOPHON FOOTER
+     ═══════════════════════════════════════════════════════ -->
+  <footer class="colophon" role="contentinfo">
+    <div class="colophon-inner">
+      <div>
+        <h3 class="colophon-heading">Typography</h3>
+        <p class="colophon-body">
+          Display type set in <em>Cormorant Garamond</em> by Christian Thalmann. Body text in <em>EB Garamond</em>. Metadata and catalog numbers in <em>Courier Prime</em>.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="colophon-heading">Publication</h3>
+        <p class="colophon-body">
+          <em>sur lyng-a</em> is a digital chapbook published in continuous edition. Poems are added as written. All work &copy; joa, all years.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="colophon-heading">Lost Leaves</h3>
+        <p class="colophon-body">
+          If you believe a verse was misplaced in error, you may <a href="mailto:gjdkhar@gmail.com">write to the author</a>.
+        </p>
+      </div>
+    </div>
+
+    <div class="colophon-inner colophon-bottom">
+      <p class="colophon-copyright">
+        <em>sur lyng-a</em> &nbsp;·&nbsp; Poetry by joa &nbsp;·&nbsp; Typeset with care, read at your own pace.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════
+     TOAST
+     ═══════════════════════════════════════════════════════ -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- 404 Interactive Script (Palette & Theme Handling) -->
+  <script>
+    (function () {
+      const PALETTES = {
+        terracotta: { name: 'Aged Parchment', short: 'Parchment' },
+        pine:       { name: 'Pine & Amber', short: 'Pine' },
+        navy:       { name: 'Midnight Navy', short: 'Navy' },
+        espresso:   { name: 'Smoked Espresso', short: 'Espresso' },
+        burgundy:   { name: 'Vintage Burgundy', short: 'Burgundy' },
+      };
+
+      const dom = {
+        paletteDropdown: document.getElementById('palette-dropdown'),
+        paletteBtn: document.getElementById('palette-btn'),
+        paletteMenu: document.getElementById('palette-menu'),
+        paletteCurrentLabel: document.getElementById('palette-current-label'),
+        themeToggle: document.getElementById('theme-toggle'),
+        toast: document.getElementById('toast'),
+      };
+
+      function showToast(msg) {
+        if (!dom.toast) return;
+        dom.toast.textContent = msg;
+        dom.toast.classList.add('show');
+        setTimeout(() => dom.toast.classList.remove('show'), 2200);
+      }
+
+      function updateThemeLabels() {
+        const btn = dom.themeToggle;
+        if (!btn) return;
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const label = btn.querySelector('.theme-label');
+        if (label) label.textContent = isDark ? 'Daylight' : 'Candlelight';
+      }
+
+      function applyPalette(key, notify) {
+        if (!PALETTES[key]) key = 'pine';
+        document.documentElement.setAttribute('data-palette', key);
+        localStorage.setItem('sur-lyng-a-palette', key);
+        if (dom.paletteCurrentLabel && PALETTES[key]) {
+          dom.paletteCurrentLabel.textContent = PALETTES[key].short;
+        }
+        document.querySelectorAll('.palette-option').forEach(b => {
+          const active = b.dataset.palette === key;
+          b.classList.toggle('active', active);
+        });
+        if (notify) showToast('Palette: ' + PALETTES[key].name + ' ◆');
+      }
+
+      function applyTheme(mode) {
+        document.documentElement.setAttribute('data-theme', mode === 'dark' ? 'dark' : '');
+        localStorage.setItem('sur-lyng-a-theme', mode);
+        updateThemeLabels();
+      }
+
+      // Init
+      const savedPalette = localStorage.getItem('sur-lyng-a-palette') || 'pine';
+      const savedTheme = localStorage.getItem('sur-lyng-a-theme') || 'light';
+      applyPalette(savedPalette, false);
+      applyTheme(savedTheme);
+
+      // Palette menu wiring
+      dom.paletteBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dom.paletteMenu?.classList.toggle('open');
+        dom.paletteBtn.setAttribute('aria-expanded', String(isOpen));
+        if (isOpen) dom.paletteMenu?.removeAttribute('hidden');
+        else dom.paletteMenu?.setAttribute('hidden', '');
+      });
+
+      document.querySelectorAll('.palette-option').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const p = btn.dataset.palette;
+          if (p) {
+            applyPalette(p, true);
+            dom.paletteMenu?.classList.remove('open');
+            dom.paletteMenu?.setAttribute('hidden', '');
+            dom.paletteBtn?.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (dom.paletteDropdown && !dom.paletteDropdown.contains(e.target)) {
+          dom.paletteMenu?.classList.remove('open');
+          dom.paletteMenu?.setAttribute('hidden', '');
+          dom.paletteBtn?.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Theme toggle wiring
+      dom.themeToggle?.addEventListener('click', () => {
+        const cur = localStorage.getItem('sur-lyng-a-theme') || 'light';
+        applyTheme(cur === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+</body>
+
+</html>
+
