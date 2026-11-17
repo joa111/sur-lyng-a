@@ -31,11 +31,47 @@ const THEME_GLOSS = {
 // date is intentionally not displayed; delete the field if you want it gone from the public repo
 const POEMS = [
   {
+    id: 26,
+    catalogNumber: "No. 26",
+    title: "plea",
+    date: "November 2026",
+    when: "@ d funeral",
+    theme: "tdong duma",
+    featured: true,
+    epigraph: null,
+    body: `I'm not good as I should be,
+I'm no better than what could be;
+Take my hand... whisper to me.
+Lord I need Your strength in me.
+
+Yes, I want to do what's right;
+Failing often, try as I might.
+Yes, I want to walk in the light,
+be with You when my soul takes flight.
+
+Temptations abound,
+enticing me to turn around.
+Tug of war pins me down,
+need Your strength, stand my ground.
+Up, down, left or right?
+Lead me on the path that's right.
+Spirit willing... flesh weak...
+Your strength therefore ever seek.
+
+For I'm not good as I should be,
+I'm no better than what could be,
+Please take my hand, whisper to me,
+Lord I need Your strength in me.`,
+    marginNote: "flawed yet undaunted to own.",
+    readingTime: "1 min"
+  },
+
+  {
     id: 25,
     catalogNumber: "No. 25",
     title: "the apathy of sins",
     date: "October 2026",
-    when: null,
+    when: "in too deep",
     theme: "tdong duma",
     featured: true,
     epigraph: null,
@@ -76,7 +112,7 @@ but from numbness.`,
     catalogNumber: "No. 24",
     title: "Places",
     date: "August 2026",
-    when: null,
+    when: "balcony sesh",
     theme: "kiad-so",
     featured: false,
     epigraph: null,
@@ -105,7 +141,7 @@ they all breathe her name.`,
     catalogNumber: "No. 23",
     title: "dait dor",
     date: "July 2026",
-    when: null,
+    when: "persona did",
     theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
@@ -114,7 +150,7 @@ wa mih na u nud. Ong oa boi da biej
 da leh ka bih ka sma iong ka. Him oa da u siej
 te sieh oa ha u nud.`,
     marginNote: null,
-    readingTime: "2 min"
+    readingTime: ">1 min"
   },
 
   {
@@ -122,7 +158,7 @@ te sieh oa ha u nud.`,
     catalogNumber: "No. 22",
     title: "bynta wa so",
     date: "July 2026",
-    when: null,
+    when: "persona did",
     theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
@@ -142,7 +178,7 @@ Wan oa heini u pyndep ia i jingthmu iong U, te man i ite u wow pynio oa ia U.
 A wa na jrong, lynter u man oa u bru wym hun hei ni i thuh ia i jingtip.
 Chihajar ngooh.`,
     marginNote: "Continuing the Pnar series.",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 
   {
@@ -150,7 +186,7 @@ Chihajar ngooh.`,
     catalogNumber: "No. 21",
     title: "bynta wa lē",
     date: "July 2026",
-    when: null,
+    when: "persona did",
     theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
@@ -164,7 +200,7 @@ dap ko u snem rupa.
 toh lah wei man i por wa sniawbha,
 nga leh kwah oa u lai pynsawa.`,
     marginNote: "Continuing the Pnar series.",
-    readingTime: "2 min"
+    readingTime: ">1 min"
   },
 
   {
@@ -172,7 +208,7 @@ nga leh kwah oa u lai pynsawa.`,
     catalogNumber: "No. 20",
     title: "bynta wa-ar",
     date: "July 2026",
-    when: null,
+    when: "persona did",
     theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
@@ -202,7 +238,7 @@ iei kam iei kamai u ioh ja.
 
 kyrwoh na dohnud.`,
     marginNote: "Continuing the Pnar series.",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 
   {
@@ -210,7 +246,7 @@ kyrwoh na dohnud.`,
     catalogNumber: "No. 19",
     title: "bynta 1",
     date: "July 2026",
-    when: null,
+    when: "persona did",
     theme: "kyntien wym lait",
     featured: false,
     epigraph: null,
@@ -224,7 +260,7 @@ ha waroh ki jingkwah wei jingthrang wa bha iong nga
 heini kbai joor oa kat wa ye ki bor
 ryngkat wei jingkmen wa thaba wa phyrnai`,
     marginNote: "The first part of a series written in Pnar.",
-    readingTime: "2 min"
+    readingTime: ">1 min"
   },
 
   {
@@ -232,14 +268,14 @@ ryngkat wei jingkmen wa thaba wa phyrnai`,
     catalogNumber: "No. 18",
     title: "her, and my consistent effort to make believe",
     date: "March 2026",
-    when: null,
+    when: "everyday",
     theme: "kiad-so",
     featured: false,
     epigraph: null,
     body: `i love my dawgs.
 thank u, the end.`,
     marginNote: "Love as routine, not fireworks.",
-    readingTime: "2 min"
+    readingTime: "infinity"
   },
 
   {
@@ -269,7 +305,7 @@ kiss of life.
 
 feels surreal i can still feel the touch of your hair.`,
     marginNote: "What if I told you I loved you?",
-    readingTime: "1 min"
+    readingTime: ">1 min but i wish it never ended"
   },
 
   {
@@ -296,7 +332,7 @@ to this monotonous, guilty pleaded free,
 well groomed, suit and a tie, 9-5 spree.
 We move along. Just to prolong, of what can be born, in this unfaithful dorm, the beautiful storm of whom we might encounter.`,
     marginNote: "I think its time i found a new hobby other than smoking, any suggestions?",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 
   {
@@ -304,7 +340,7 @@ We move along. Just to prolong, of what can be born, in this unfaithful dorm, th
     catalogNumber: "No. 15",
     title: "Tour",
     date: "September 2025",
-    when: null,
+    when: "tip?",
     theme: "tdong duma",
     featured: false,
     epigraph: {
@@ -366,7 +402,7 @@ a non believer of your love.`,
     catalogNumber: "No. 13",
     title: "Untitled-1",
     date: "February 2025",
-    when: null,
+    when: "everyday",
     theme: "tdong duma",
     featured: false,
     epigraph: null,
@@ -374,7 +410,7 @@ a non believer of your love.`,
 
 What remains when nobody's looking?`,
     marginNote: "Two questions, no answers.",
-    readingTime: "1 min"
+    readingTime: ">1 min"
   },
 
   {
@@ -382,7 +418,7 @@ What remains when nobody's looking?`,
     catalogNumber: "No. 12",
     title: "Fiery, Starry, January",
     date: "January 2025",
-    when: null,
+    when: "ciggerate break",
     theme: "tdong duma",
     featured: false,
     epigraph: {
@@ -415,7 +451,7 @@ ready for marvellous heights.
 Dreams;
 taste like sweet cream`,
     marginNote: "Jupiter is prominently visible tonight, a dim light tho.",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 
   {
@@ -472,7 +508,7 @@ but remember everything and nothing, gently.`,
     catalogNumber: "No. 09",
     title: "Ordinary",
     date: "December 2024",
-    when: null,
+    when: "at work",
     theme: "kiad-so",
     featured: false,
     epigraph: null,
@@ -491,7 +527,7 @@ But now everything, if nothing, is more than a mere play.`,
     catalogNumber: "No. 08",
     title: "Always never there",
     date: "December 2023",
-    when: null,
+    when: "tip",
     theme: "tdong duma",
     featured: false,
     epigraph: null,
@@ -526,7 +562,7 @@ But simply where....?`,
     catalogNumber: "No. 07",
     title: "Ordinary",
     date: "August 2023",
-    when: null,
+    when: "pee  break",
     theme: "tdong duma",
     featured: false,
     epigraph: null,
@@ -557,7 +593,7 @@ Is that not enough?
 To live without the pressure of the score,
 To embrace life, wanting nothing more?`,
     marginNote: "Semester's eating me alive, so I stopped.",
-    readingTime: "3 min"
+    readingTime: "2 min"
   },
 
   {
@@ -595,7 +631,7 @@ Where does selflessness bloom, and when does it rot into emptiness?
 
 Tell me... Is meaning found, or do we carve it from the void with trembling hands`,
     marginNote: "Ironic, isn't it?",
-    readingTime: "3 min"
+    readingTime: "2 min"
   },
 
   {
@@ -603,7 +639,7 @@ Tell me... Is meaning found, or do we carve it from the void with trembling hand
     catalogNumber: "No. 05",
     title: "organs dysfunction",
     date: "December 2021",
-    when: null,
+    when: "prolly '22",
     theme: "kiad-so",
     featured: false,
     epigraph: null,
@@ -659,7 +695,7 @@ But it resonates like a chaotic wave.
 A need to face it now....what a pity.
 Embrace truth's call, i shall put it to the grave.`,
     marginNote: "I ran off, and until now i still wonder what would have happened if i hadn't.",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 
   {
@@ -690,7 +726,7 @@ How long is the wait?
 Time and space is all but a bait,
 to this uncalculated mystery.`,
     marginNote: "Some people feel close enough to touch and still completely out of reach.",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 
   {
@@ -698,7 +734,7 @@ to this uncalculated mystery.`,
     catalogNumber: "No. 02",
     title: "UNIVERSE",
     date: "January 2021",
-    when: null,
+    when: "love drunk",
     theme: "kiad-so",
     featured: false,
     epigraph: {
@@ -718,7 +754,7 @@ For i am
 positively looking forward to the next day
 when I can see you again`,
     marginNote: "Written in 2021, less do we know about Covid.",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 
   {
@@ -726,7 +762,7 @@ when I can see you again`,
     catalogNumber: "No. 01",
     title: "Yin & Yang",
     date: "August 2020",
-    when: null,
+    when: "spring of 21",
     theme: "Mei Ram-ew",
     featured: false,
     epigraph: null,
@@ -752,7 +788,7 @@ Your presence is magical.
 You may be violent
 But you are inevitably essential.`,
     marginNote: "Written in the spring of 2020, after my classes were cancelled.",
-    readingTime: "2 min"
+    readingTime: "1 min"
   },
 ];
 
